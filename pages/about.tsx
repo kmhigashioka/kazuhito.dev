@@ -12,7 +12,7 @@ export default function About() {
         </p>
       </div>
       <div className="m-10">
-        <p className="text-xl font-bold text-gray-900 text-center mb-3">Work History</p>
+        <p className="text-xl text-gray-900 text-center mb-5">Work History</p>
 
         {renderHistoryItem({
           title: 'Infor PSSC, Inc.',
@@ -73,7 +73,7 @@ interface HistoryItemProps {
 
 function renderHistoryItem({ title, subTitle, description, isLast }: HistoryItemProps) {
   return (
-    <div className="flex mb-5 md:even:flex-row-reverse">
+    <div className="flex mb-10 md:even:flex-row-reverse">
       <div className="hidden md:block md:w-6/12" />
       <div className="flex flex-col items-center pt-1.5 relative mr-5 md:mx-2.5">
         <div className="inline-block rounded-full h-3 w-3 border-2 border-gray-300" />
@@ -82,7 +82,7 @@ function renderHistoryItem({ title, subTitle, description, isLast }: HistoryItem
       <div className="md:w-6/12">
         <p className="text-gray-900 font-semibold">{title}</p>
         <p className="text-gray-500 text-sm">{subTitle}</p>
-        <p className="text-gray-900 text-sm mt-2">{description}</p>
+        <p className="text-gray-900 text-sm mt-5">{description}</p>
       </div>
     </div>
   )

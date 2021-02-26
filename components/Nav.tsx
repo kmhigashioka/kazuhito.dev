@@ -23,7 +23,7 @@ export default function Header() {
   return (
     <nav className="w-100 md:w-60">
       <div className="flex items-center justify-between m-10 h-8">
-        <span className="text-lg antialiased font-semibold italic text-gray-900">@kmhigashioka</span>
+        <span className="text-lg antialiased font-thin text-gray-900">@kmhigashioka</span>
         <button
           type="button"
           className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
