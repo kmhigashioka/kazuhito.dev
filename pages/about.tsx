@@ -1,4 +1,4 @@
-import Tag from '../components/Tag'
+import Tag, { tech } from '../components/Tag'
 
 export default function About() {
   return (
@@ -20,7 +20,7 @@ export default function About() {
           description: (
             <>
               Joined as <i>Software Engineer, Senior</i> and worked on a Fashion industry solutions.
-              Had 1+ years of experience on <Tag>React</Tag>, <Tag>C#</Tag>, <Tag>.Net Core</Tag>, and <Tag>SQL Server</Tag>.
+              Had 1+ years of experience on <Tag>{tech.REACT}</Tag>, <Tag>{tech.C_SHARP}</Tag>, <Tag>{tech.DOTNET_CORE}</Tag>, and <Tag>{tech.SQL_SERVER}</Tag>.
             </>
           ),
         })}
@@ -31,7 +31,7 @@ export default function About() {
           description: (
             <>
               Joined as <i>Engineer</i>, mainly as React Engineer, and worked on a data analytics tool.
-              Had ~1 year of experience on <Tag>React</Tag>.
+              Had ~1 year of experience on <Tag>{tech.REACT}</Tag>.
             </>
           ),
         })}
@@ -42,8 +42,8 @@ export default function About() {
           description: (
             <>
               Began working as <i>Software Developer</i> in the healthcare industry.
-              Had 3 years of experience on the following: <Tag>angular.js</Tag>, <Tag>C#</Tag>, <Tag>.Net Framework 4.5</Tag>, <Tag>SQL Server</Tag>, and
-              1 year of experience on <Tag>React</Tag>, <Tag>Meteor / Node</Tag>, and <Tag>MongoDB</Tag>.
+              Had 3 years of experience on the following: <Tag>{tech.ANGULAR_JS}</Tag>, <Tag>{tech.C_SHARP}</Tag>, <Tag>{tech.DOTNET_FRAMEWORK}</Tag>, <Tag>{tech.SQL_SERVER}</Tag>, and
+              1 year of experience on <Tag>{tech.REACT}</Tag>, <Tag>{tech.METEOR}</Tag>, <Tag>{tech.NODE}</Tag>, and <Tag>{tech.MONGODB}</Tag>.
             </>
           ),
           isLast: true,
