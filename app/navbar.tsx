@@ -7,7 +7,7 @@ export default function NavBar() {
   return (
     <header>
       <div>
-        <nav aria-label="Main navigation" className="px-20 py-10">
+        <nav aria-label="Main navigation" className="px-10 sm:px-20 pt-10">
           <ul className="flex justify-end">
             <li>
               <NavLink className={({isActive}) => isActive ? linkActiveClassName : linkInactiveClassName} to="/">home</NavLink>

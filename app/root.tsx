@@ -97,7 +97,7 @@ function Document({
   title?: string;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-gray-50">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -120,7 +120,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     <div className="remix-app">
       <NavBar />
       <div className="remix-app__main">
-        <div className="container remix-app__main-content">{children}</div>
+        <div className="remix-app__main-content">{children}</div>
       </div>
     </div>
   );
