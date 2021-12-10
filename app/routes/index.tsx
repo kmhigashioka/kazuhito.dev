@@ -1,5 +1,6 @@
 import type { MetaFunction, LoaderFunction } from "remix";
-import { useLoaderData, json, Link } from "remix";
+import { json } from "remix";
+import pictureSrc from "../assets/picture.svg";
 
 type IndexData = {
   resources: Array<{ name: string; url: string }>;
@@ -54,47 +55,36 @@ export let meta: MetaFunction = () => {
   };
 };
 
-// https://remix.run/guides/routing#index-routes
 export default function Index() {
-  let data = useLoaderData<IndexData>();
-
   return (
-    <div className="remix__page">
-      <main>
-        <h2>Welcome to Remix!</h2>
-        <p>We're stoked that you're here. 🥳</p>
-        <p>
-          Feel free to take a look around the code to see how Remix does things,
-          it might be a bit different than what you’re used to. When you're
-          ready to dive deeper, we've got plenty of resources to get you
-          up-and-running quickly.
+    <main className="flex min-h-[calc(100vh-4rem)] flex-col py-8 px-10 sm:flex-row-reverse sm:pt-16 sm:px-20">
+      <div className="justify-center items-center hidden md:inline-flex">
+        <img className="h-40 w-40 sm:h-80 sm:w-80" src={pictureSrc} />
+      </div>
+      <div>
+        <h1 className="text-gray-900 text-2xl sm:text-4xl">
+          Hi! 👋 I'm Kazu.
+          <br />
+          Building software for human.
+        </h1>
+        <p className="text-gray-900 text-lg pt-8 sm:pt-10 sm:text-xl">
+          Currently a Senior Software Developer at <a className="text-purple-900 underline" href="https://www.engagerocket.co/">EngageRocket</a>.
         </p>
-        <p>
-          Check out all the demos in this starter, and then just delete the{" "}
-          <code>app/routes/demos</code> and <code>app/styles/demos</code>{" "}
-          folders when you're ready to turn this into your next project.
-        </p>
-      </main>
-      <aside>
-        <h2>Demos In This App</h2>
-        <ul>
-          {data.demos.map(demo => (
-            <li key={demo.to} className="remix__page__resource">
-              <Link to={demo.to} prefetch="intent">
-                {demo.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <h2>Resources</h2>
-        <ul>
-          {data.resources.map(resource => (
-            <li key={resource.url} className="remix__page__resource">
-              <a href={resource.url}>{resource.name}</a>
-            </li>
-          ))}
-        </ul>
-      </aside>
-    </div>
+      </div>
+      <RandomCircles />
+    </main>
+  );
+}
+
+function RandomCircles() {
+  return (
+    <>
+      <svg className="absolute top-0 left-0 pointer-events-none z-minus-1 h-screen w-screen" xmlns="http://www.w3.org/2000/svg">
+        <circle className="fill-current text-violet-20" cx="-20" cy="80%" r="75" />
+        <circle className="fill-current text-purple-20" cx="400" cy="195" r="190" />
+        <circle className="fill-current text-gray-20 hidden lg:inline" cx="97%" cy="195" r="65" />
+        <circle className="fill-current text-pink-20" cx="650" cy="95%" r="90" />
+      </svg>
+    </>
   );
 }
