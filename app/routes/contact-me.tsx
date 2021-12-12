@@ -26,14 +26,14 @@ export default function ContactMe() {
 function JustSayHi({ email }: { email: string }) {
   return (
     <span className="bg-purple-900 p-5 rounded-2xl text-white sm:p-10 md:w-96">
-      <h4 className="text-lg font-bold sm:text-xl">Just say hi</h4>
+      <p className="text-lg font-bold sm:text-xl">Just say hi</p>
       <p className="mt-2 text-xs">Lorem ipsum dolor emet. The quick brown fox jumps over the lazy dog?</p>
       <div className="flex items-start mt-7 sm:mt-14">
-        <img className="mr-3 sm:mr-6" src={emailSrc} />
+        <img alt="email icon" className="mr-3 w-6 h-6 sm:mr-6" src={emailSrc} />
         <a className="break-all underline" href={`mailto:${email}?subject=Hi! 👋`}>{email}</a>
       </div>
       <div className="flex mt-7 sm:mt-14">
-        <img className="mr-3 sm:mr-6" src={placeSrc} />
+        <img alt="place icon" className="mr-3 w-6 h-6 sm:mr-6" src={placeSrc} />
         Philippines
       </div>
     </span>
