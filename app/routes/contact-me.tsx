@@ -1,5 +1,13 @@
+import type { MetaFunction } from "remix";
 import emailSrc from "../assets/email.svg";
 import placeSrc from "../assets/place.svg";
+
+export let meta: MetaFunction = () => {
+  return {
+    title: "Hi! 👋 I'm Kazu. Contact me",
+    description: "Building software for humans."
+  };
+};
 
 export default function ContactMe() {
   const email = 'kmhigashioka@gmail.com';
