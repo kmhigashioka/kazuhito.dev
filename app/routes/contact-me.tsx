@@ -13,13 +13,16 @@ export default function ContactMe() {
   const email = 'kmhigashioka@gmail.com';
 
   return (
-    <main className="flex flex-col items-center py-8 px-10 sm:pt-16">
-      <h1 className="text-gray-900 font-bold text-2xl sm:text-3xl">contact me</h1>
-      <div className="flex flex-col mt-8 shadow-card bg-white p-1 rounded-2xl w-full max-w-5xl md:flex-row">
-        <JustSayHi email={email} />
-        <ContactForm />
-      </div>
-    </main>
+    <>
+      <div className="h-96 w-full absolute top-0 left-0 right-0 bg-purple-15 z-minus-1 pointer-events-none" />
+      <main className="flex flex-col items-center py-8 px-10 sm:pt-16">
+        <h1 className="text-gray-900 font-bold text-2xl sm:text-3xl">contact me</h1>
+        <div className="flex flex-col mt-8 shadow-card bg-white p-1 rounded-2xl w-full max-w-5xl md:flex-row">
+          <JustSayHi email={email} />
+          <ContactForm />
+        </div>
+      </main>
+    </>
   );
 }
 
