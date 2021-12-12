@@ -14,10 +14,10 @@ export default function NavBar() {
             </li>
             {/* <li className="pl-10">
               <NavLink className={({isActive}) => isActive ? linkActiveClassName : linkInactiveClassName} to="/my-work">my work</NavLink>
-            </li>
+            </li> */}
             <li className="pl-10">
               <NavLink className={({isActive}) => isActive ? linkActiveClassName : linkInactiveClassName} to="/contact-me">contact me</NavLink>
-            </li> */}
+            </li>
           </ul>
         </nav>
       </div>

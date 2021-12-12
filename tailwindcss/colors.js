@@ -11,6 +11,7 @@ const pink = {
 
 const purple = {
   900: '#9E579D',
+  800: '#8e4e8d',
   20: 'rgba(158, 87, 157, 0.2)'
 };
 
@@ -18,9 +19,12 @@ const violet = {
   20: 'rgba(87, 75, 144, 0.2)',
 };
 
+const white = '#ffffff';
+
 module.exports = {
   gray,
   pink,
   purple,
   violet,
+  white,
 }
