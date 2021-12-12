@@ -75,7 +75,7 @@ function Input({ containerClassName, label, ...props }: InputProps) {
       <label className="block text-xs text-gray-800" htmlFor={props.id}>
         {label}
       </label>
-      <input className="outline-none w-full border-2 border-gray-800 rounded-lg h-10 p-2 focus:border-purple-900" {...props} />
+      <input className="outline-none w-full border-2 border-gray-900 rounded-lg h-10 p-2 text-gray-800 focus:border-purple-900" {...props} />
     </div>
   );
 }
