@@ -16,6 +16,7 @@ import NavBar from "./navbar";
 // https://remix.run/api/app#links
 export let links: LinksFunction = () => {
   return [
+    { rel: "stylesheet", href: "https://unpkg.com/@reach/dialog@0.16.2/styles.css" },
     { rel: "stylesheet", href: styles },
     { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Poppins&display=swap" }
   ];
@@ -124,4 +125,8 @@ function Layout({ children }: { children: React.ReactNode }) {
       </div>
     </div>
   );
+}
+
+if (process.env.NODE_ENV == 'development') {
+  import('dotenv').then((dotenv) => dotenv.config());
 }
