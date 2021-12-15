@@ -2,7 +2,7 @@ import { Dialog } from '@reach/dialog';
 
 interface ModalProps {
   className?: string;
-  children: React.ReactElement;
+  children: any;
   isOpen: boolean;
   onClose: (event: React.MouseEvent | React.KeyboardEvent) => void;
 }

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import type { ActionFunction, MetaFunction } from "remix";
 import { Form, useActionData, useTransition } from "remix";
+import Input from "~/components/Input";
 import Modal from "~/components/Modal";
+import Textarea from "~/components/Textarea";
 import sendEmail from "~/utils/send-email";
 import checkCircleSrc from "../assets/check_circle.svg";
 import emailSrc from "../assets/email.svg";
@@ -112,34 +114,6 @@ function ContactForm() {
         </button>
       </Form>
     </span>
-  );
-}
-
-interface InputProps {
-  containerClassName?: string;
-  id?: string;
-  label: any;
-}
-
-function Input({ containerClassName, label, ...props }: InputProps) {
-  return (
-    <div className={containerClassName}>
-      <label className="block text-xs text-gray-800" htmlFor={props.id}>
-        {label}
-      </label>
-      <input className="outline-none w-full border-2 border-gray-900 rounded-lg h-10 p-2 text-gray-800 focus:border-purple-900" {...props} />
-    </div>
-  );
-}
-
-function Textarea({ containerClassName, label, ...props }: InputProps) {
-  return (
-    <div className={containerClassName}>
-      <label className="block text-xs text-gray-800" htmlFor={props.id}>
-        {label}
-      </label>
-      <textarea rows={4} className="outline-none w-full border-2 border-gray-900 rounded-lg p-2 focus:border-purple-900 text-gray-800" {...props} />
-    </div>
   );
 }
 
