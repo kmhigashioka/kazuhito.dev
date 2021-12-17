@@ -62,10 +62,10 @@ export default function Index() {
         <img className="h-40 w-40 sm:h-80 sm:w-80" src={pictureSrc} />
       </div>
       <div>
-        <h1 className="text-gray-900 text-2xl sm:text-4xl">
-          Hi! 👋 I'm Kazu.
+        <h1 className="font-bold text-gray-900 text-2xl sm:text-4xl">
+          Hi! <span className="font-normal">👋</span> I'm Kazu,
           <br />
-          Building software for humans.
+          building software for humans.
         </h1>
         <p className="text-gray-900 text-lg pt-8 sm:pt-10 sm:text-xl">
           Currently a Senior Software Developer at <a className="text-purple-900 underline" href="https://www.engagerocket.co/">EngageRocket</a>.
