@@ -65,7 +65,7 @@ export default function Index() {
         <h1 className="text-gray-900 text-2xl sm:text-4xl">
           Hi! 👋 I'm Kazu.
           <br />
-          Building software for human.
+          Building software for humans.
         </h1>
         <p className="text-gray-900 text-lg pt-8 sm:pt-10 sm:text-xl">
           Currently a Senior Software Developer at <a className="text-purple-900 underline" href="https://www.engagerocket.co/">EngageRocket</a>.
