@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { ActionFunction, MetaFunction } from "remix";
+import { ActionFunction, MetaFunction, useLoaderData, } from "remix";
 import { Form, useActionData, useTransition } from "remix";
 import Input from "~/components/Input";
 import Modal from "~/components/Modal";
@@ -16,9 +16,16 @@ export let meta: MetaFunction = () => {
   };
 };
 
+export function loader() {
+  return {
+    ENV: {
+      CONTACT_ME_EMAIL: process.env.CONTACT_ME_EMAIL,
+    },
+  };
+}
+
 export default function ContactMe() {
   const actionData = useActionData();
-  const email = 'kmhigashioka@gmail.com';
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
   useEffect(() => {
@@ -33,7 +40,7 @@ export default function ContactMe() {
       <main className="flex flex-col items-center py-8 px-10 sm:pt-16">
         <h1 className="text-gray-900 font-bold text-2xl sm:text-3xl">contact me</h1>
         <div className="flex flex-col mt-8 shadow-card bg-white p-1 rounded-2xl w-full max-w-5xl md:flex-row">
-          <JustSayHi email={email} />
+          <JustSayHi />
           <ContactForm />
         </div>
         <Modal
@@ -52,14 +59,16 @@ export default function ContactMe() {
   );
 }
 
-function JustSayHi({ email }: { email: string }) {
+function JustSayHi() {
+  const data = useLoaderData();
+
   return (
     <span className="bg-purple-900 p-5 rounded-2xl text-white sm:p-10 md:w-96">
       <p className="text-lg font-bold sm:text-xl">Just say hi</p>
       <p className="mt-2 text-xs">Lorem ipsum dolor emet. The quick brown fox jumps over the lazy dog?</p>
       <div className="flex items-start mt-7 sm:mt-14">
         <img alt="email icon" className="mr-3 w-6 h-6 sm:mr-6" src={emailSrc} />
-        <a className="break-all underline" href={`mailto:${email}?subject=Hi! 👋`}>{email}</a>
+        <a className="break-all underline" href={`mailto:${data.ENV['CONTACT_ME_EMAIL']}?subject=Hi! 👋`}>{data.ENV['CONTACT_ME_EMAIL']}</a>
       </div>
       <div className="flex mt-7 sm:mt-14">
         <img alt="place icon" className="mr-3 w-6 h-6 sm:mr-6" src={placeSrc} />
