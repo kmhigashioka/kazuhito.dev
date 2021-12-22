@@ -143,7 +143,7 @@ function Work({ title, subTitle, imgSrc, imgProps }: WorkProps) {
     <Card className="mt-8 flex flex-col max-w-5xl mx-10 p-4 sm:p-8 md:gap-2 md:flex-row-reverse md:odd:flex-row md:odd:text-right">
       {imgSrc && (
         <div className="flex-1">
-          <img src={imgSrc} {...imgProps} />
+          <img src={imgSrc} loading="lazy" {...imgProps} />
         </div>
       )}
       <div className="flex flex-col justify-end flex-1 text-gray-900">
