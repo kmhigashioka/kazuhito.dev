@@ -21,7 +21,7 @@ export default function Index() {
           building software for humans.
         </h1>
         <p className="text-gray-900 text-lg pt-8 sm:pt-10 sm:text-xl">
-          Currently a Senior Software Developer at <a className="text-purple-900 underline" href="https://www.engagerocket.co/">EngageRocket</a>.
+          Currently a Senior Software Developer at <a className="text-violet-900 underline" href="https://www.engagerocket.co/">EngageRocket</a>.
         </p>
       </div>
       <RandomCircles />
