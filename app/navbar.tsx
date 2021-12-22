@@ -1,6 +1,6 @@
 import {NavLink} from "remix";
 
-const linkActiveClassName = 'text-purple-900 hover:border-purple-900 border-b-2';
+const linkActiveClassName = 'text-violet-900 hover:border-violet-900 border-b-2';
 const linkInactiveClassName = 'text-gray-800 hover:border-gray-800 hover:border-b-2';
 
 export default function NavBar() {

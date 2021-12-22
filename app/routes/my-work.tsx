@@ -120,7 +120,7 @@ interface ArticleProps {
 
 function Article({ title, subTitle, description, children }: ArticleProps) {
   return (
-    <article className="py-10 even:bg-purple-900 flex justify-center w-full text-gray-900 even:text-gray-50">
+    <article className="py-10 even:bg-violet-900 flex justify-center w-full text-gray-900 even:text-gray-50">
       <div className="w-full max-w-5xl">
         <h2 className="mx-10 text-xl sm:text-2xl font-bold mb-2">{title}</h2>
         <h3 className="mx-10 text-lg sm:text-xl mb-2">{subTitle}</h3>
