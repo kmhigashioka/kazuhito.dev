@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ActionFunction, MetaFunction, useLoaderData, } from "remix";
 import { Form, useActionData, useTransition } from "remix";
+import Button from "~/components/Button";
 import Input from "~/components/Input";
 import Modal from "~/components/Modal";
 import Textarea from "~/components/Textarea";
@@ -52,7 +53,9 @@ export default function ContactMe() {
           <img alt="check_circle icon" className="flex items-center mb-6 w-14 h-14" src={checkCircleSrc} />
           <p className="text-center text-base font-bold mb-2" id="modal-title">Your message is recorded!</p>
           <p className="text-center text-xs mb-6 text-gray-800">I’ll reach you as soon as I read your message. Take care!</p>
-          <button onClick={() => setIsConfirmationOpen(false)} className="outline-none bg-violet-900 hover:bg-violet-880 text-white rounded h-10 w-full shadow-button-light">OK, Got it!</button>
+          <Button onClick={() => setIsConfirmationOpen(false)}>
+            OK, Got it!
+          </Button>
         </Modal>
       </main>
     </>
@@ -118,9 +121,9 @@ function ContactForm() {
           required
         />
 
-        <button disabled={transition.state == 'submitting'} className="bg-violet-900 hover:bg-violet-880 text-white rounded h-10 w-full shadow-button-light disabled:opacity-50">
+        <Button disabled={transition.state == 'submitting'}>
           SEND
-        </button>
+        </Button>
       </Form>
     </span>
   );
