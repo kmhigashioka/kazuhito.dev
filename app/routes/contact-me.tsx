@@ -70,11 +70,11 @@ function JustSayHi() {
       <p className="text-lg font-bold sm:text-xl">Just say hi</p>
       <p className="mt-2 text-xs">Lorem ipsum dolor emet. The quick brown fox jumps over the lazy dog?</p>
       <div className="flex items-start mt-7 sm:mt-14">
-        <img alt="email icon" className="mr-3 w-6 h-6 sm:mr-6" src={emailSrc} />
+        <img alt="email icon" className="mr-3 w-6 h-6 sm:mr-6" src={emailSrc} width={24} height={24} />
         <a className="break-all underline" href={`mailto:${data.ENV['CONTACT_ME_EMAIL']}?subject=Hi! 👋`}>{data.ENV['CONTACT_ME_EMAIL']}</a>
       </div>
       <div className="flex mt-7 sm:mt-14">
-        <img alt="place icon" className="mr-3 w-6 h-6 sm:mr-6" src={placeSrc} />
+        <img alt="place icon" className="mr-3 w-6 h-6 sm:mr-6" src={placeSrc} width={24} height={24} />
         Philippines
       </div>
     </span>
