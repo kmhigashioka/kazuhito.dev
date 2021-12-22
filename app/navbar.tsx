@@ -12,10 +12,10 @@ export default function NavBar() {
             <li>
               <NavLink prefetch="intent" className={({isActive}) => isActive ? linkActiveClassName : linkInactiveClassName} to="/">home</NavLink>
             </li>
-            <li className="pl-10">
+            <li className="pl-4">
               <NavLink prefetch="intent" className={({isActive}) => isActive ? linkActiveClassName : linkInactiveClassName} to="/my-work">my work</NavLink>
             </li>
-            <li className="pl-10">
+            <li className="pl-4">
               <NavLink prefetch="intent" className={({isActive}) => isActive ? linkActiveClassName : linkInactiveClassName} to="/contact-me">contact me</NavLink>
             </li>
           </ul>
