@@ -18,7 +18,9 @@ export let links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: "https://unpkg.com/@reach/dialog@0.16.2/styles.css" },
     { rel: "stylesheet", href: styles },
-    { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Poppins&display=swap" }
+    { rel: "preconnect", href: "https://fonts.googleapis.com" },
+    { rel: "preconnect", href: "https://fonts.gstatic.com" },
+    { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" }
   ];
 };
 

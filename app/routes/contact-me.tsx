@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ActionFunction, MetaFunction, useLoaderData, } from "remix";
 import { Form, useActionData, useTransition } from "remix";
+import Button from "~/components/Button";
 import Input from "~/components/Input";
 import Modal from "~/components/Modal";
 import Textarea from "~/components/Textarea";
@@ -36,7 +37,7 @@ export default function ContactMe() {
 
   return (
     <>
-      <div className="h-96 w-full absolute top-0 left-0 right-0 bg-purple-15 z-minus-1 pointer-events-none" />
+      <div className="h-96 w-full absolute top-0 left-0 right-0 bg-violet-20 z-minus-1 pointer-events-none" />
       <main className="flex flex-col items-center py-8 px-10 sm:pt-16">
         <h1 className="text-gray-900 font-bold text-2xl sm:text-3xl">contact me</h1>
         <div className="flex flex-col mt-8 shadow-card bg-white p-1 rounded-2xl w-full max-w-5xl md:flex-row">
@@ -52,7 +53,9 @@ export default function ContactMe() {
           <img alt="check_circle icon" className="flex items-center mb-6 w-14 h-14" src={checkCircleSrc} />
           <p className="text-center text-base font-bold mb-2" id="modal-title">Your message is recorded!</p>
           <p className="text-center text-xs mb-6 text-gray-800">I’ll reach you as soon as I read your message. Take care!</p>
-          <button onClick={() => setIsConfirmationOpen(false)} className="outline-none bg-purple-900 hover:bg-purple-800 text-white rounded h-10 w-full shadow-button-light">OK, Got it!</button>
+          <Button onClick={() => setIsConfirmationOpen(false)}>
+            OK, Got it!
+          </Button>
         </Modal>
       </main>
     </>
@@ -63,7 +66,7 @@ function JustSayHi() {
   const data = useLoaderData();
 
   return (
-    <span className="bg-purple-900 p-5 rounded-2xl text-white sm:p-10 md:w-96">
+    <span className="bg-violet-900 p-5 rounded-2xl text-white sm:p-10 md:w-96">
       <p className="text-lg font-bold sm:text-xl">Just say hi</p>
       <p className="mt-2 text-xs">Lorem ipsum dolor emet. The quick brown fox jumps over the lazy dog?</p>
       <div className="flex items-start mt-7 sm:mt-14">
@@ -118,9 +121,9 @@ function ContactForm() {
           required
         />
 
-        <button disabled={transition.state == 'submitting'} className="bg-purple-900 hover:bg-purple-800 text-white rounded h-10 w-full shadow-button-light disabled:opacity-50">
+        <Button disabled={transition.state == 'submitting'}>
           SEND
-        </button>
+        </Button>
       </Form>
     </span>
   );

@@ -1,57 +1,10 @@
-import type { MetaFunction, LoaderFunction } from "remix";
-import { json } from "remix";
+import type { MetaFunction } from "remix";
 import pictureSrc from "../assets/picture.svg";
 
-type IndexData = {
-  resources: Array<{ name: string; url: string }>;
-  demos: Array<{ name: string; to: string }>;
-};
-
-// Loaders provide data to components and are only ever called on the server, so
-// you can connect to a database or run any server side code you want right next
-// to the component that renders it.
-// https://remix.run/api/conventions#loader
-export let loader: LoaderFunction = () => {
-  let data: IndexData = {
-    resources: [
-      {
-        name: "Remix Docs",
-        url: "https://remix.run/docs"
-      },
-      {
-        name: "React Router Docs",
-        url: "https://reactrouter.com/docs"
-      },
-      {
-        name: "Remix Discord",
-        url: "https://discord.gg/VBePs6d"
-      }
-    ],
-    demos: [
-      {
-        to: "demos/actions",
-        name: "Actions"
-      },
-      {
-        to: "demos/about",
-        name: "Nested Routes, CSS loading/unloading"
-      },
-      {
-        to: "demos/params",
-        name: "URL Params and Error Boundaries"
-      }
-    ]
-  };
-
-  // https://remix.run/api/remix#json
-  return json(data);
-};
-
-// https://remix.run/api/conventions#meta
 export let meta: MetaFunction = () => {
   return {
-    title: "Remix Starter",
-    description: "Welcome to remix!"
+    title: "Hi! 👋 I'm Kazu.",
+    description: "Building software for humans."
   };
 };
 
@@ -62,13 +15,13 @@ export default function Index() {
         <img className="h-40 w-40 sm:h-80 sm:w-80" src={pictureSrc} />
       </div>
       <div>
-        <h1 className="text-gray-900 text-2xl sm:text-4xl">
-          Hi! 👋 I'm Kazu.
+        <h1 className="font-bold text-gray-900 text-2xl sm:text-4xl">
+          Hi! <span className="font-normal">👋</span> I'm Kazu,
           <br />
-          Building software for human.
+          building software for humans.
         </h1>
         <p className="text-gray-900 text-lg pt-8 sm:pt-10 sm:text-xl">
-          Currently a Senior Software Developer at <a className="text-purple-900 underline" href="https://www.engagerocket.co/">EngageRocket</a>.
+          Currently a Senior Software Developer at <a className="text-violet-900 underline" href="https://www.engagerocket.co/">EngageRocket</a>.
         </p>
       </div>
       <RandomCircles />
