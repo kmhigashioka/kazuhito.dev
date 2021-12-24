@@ -17,13 +17,14 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm ci
+      - run: npm i
+      - run: npx playwright install
       - name: Install operating system dependencies
         run: npx playwright install-deps
       - name: Run your tests
         run: npm ci
       - uses: actions/upload-artifact@v1
-        if: always()
+        if: failure()
         with:
           name: test_linux-test-results
           path: test-results
