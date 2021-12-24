@@ -9,3 +9,4 @@ api/build
 app/tailwind.css
 
 .env
+test-results
