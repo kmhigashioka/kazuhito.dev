@@ -1,0 +1,29 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  CONTACT_ME_EMAIL: ${{ secrets.CONTACT_ME_EMAIL }}
+
+jobs:
+  test_linux:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm ci
+      - name: Install operating system dependencies
+        run: npx playwright install-deps
+      - name: Run your tests
+        run: npm ci
+      - uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: test_linux-test-results
+          path: test-results
