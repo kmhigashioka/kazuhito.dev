@@ -13,7 +13,7 @@ viewports.forEach(([width, height]) => {
 
     test(`visual test for viewport ${width}x${height}`, async ({ page, browserName }) => {
       const path = `${browserName}-${width}x${height}-index_page.png`;
-      expect(await page.screenshot()).toMatchSnapshot(path, { threshold: 0.2 });
+      expect(await page.screenshot()).toMatchSnapshot(path, { threshold: 0.4 });
     });
   });
 });
