@@ -22,7 +22,7 @@ jobs:
       - name: Install operating system dependencies
         run: npx playwright install-deps
       - name: Run your tests
-        run: npm ci
+        run: npm run test:ci
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
