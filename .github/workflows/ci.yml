@@ -10,8 +10,8 @@ env:
   CONTACT_ME_EMAIL: ${{ secrets.CONTACT_ME_EMAIL }}
 
 jobs:
-  test_linux:
-    runs-on: ubuntu-18.04
+  test_win:
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -26,5 +26,24 @@ jobs:
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
-          name: test_linux-test-results
+          name: test_win-test-results
           path: test-results
+
+  # test_linux:
+  #   runs-on: ubuntu-18.04
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '14'
+  #     - run: npm i
+  #     - run: npx playwright install
+  #     - name: Install operating system dependencies
+  #       run: npx playwright install-deps
+  #     - name: Run your tests
+  #       run: npm run test:ci
+  #     - uses: actions/upload-artifact@v1
+  #       if: failure()
+  #       with:
+  #         name: test_linux-test-results
+  #         path: test-results
