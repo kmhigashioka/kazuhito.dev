@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import viewports from './viewports';
 
 const url = 'http://localhost:3000';
 
@@ -20,16 +21,6 @@ test('can navigate to employer page', async ({ page }) => {
   await page.click('text=EngageRocket');
   expect(page.url()).toBe(currentEmployer);
 });
-
-const viewports = [
-  [320, 710],
-  [375, 710],
-  [425, 710],
-  [768, 710],
-  [1024, 947],
-  [1440, 1184],
-  [2560, 2030],
-];
 
 viewports.forEach(([width, height]) => {
   test.describe('visual tests', () => {
