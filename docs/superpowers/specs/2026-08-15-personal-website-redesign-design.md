@@ -129,7 +129,9 @@ Per post the page renders: title, description, published date, reading time, tag
 Two requirements, both non-negotiable for a site that should never need attention:
 
 1. **Snapshot fallback.** A committed `src/content/devto-snapshot.json` holds the last known-good post list. If the API is down, rate-limits, times out, or returns something malformed, the build uses the snapshot. The build must never fail and must never ship an empty writing page because of a third-party outage.
-2. **Scheduled rebuild.** Build-time fetching means new posts do not appear until the site rebuilds. A daily Vercel cron calls a deploy hook so new writing appears without manual action.
+2. **Scheduled rebuild.** Build-time fetching means new posts do not appear until the site rebuilds. A daily scheduled GitHub Actions workflow calls a Vercel deploy hook so new writing appears without manual action.
+
+   *Corrected during the final fix wave (2026-08-15).* This originally said "a daily Vercel cron calls a deploy hook." Vercel Cron requires a serverless function to call, and this site is fully static — there is no function for it to invoke. What shipped is `.github/workflows/refresh.yml`, a GitHub Actions workflow on a `schedule` trigger that `curl`s the Vercel deploy hook URL directly.
 
 As of 2026-08-15 the API returns two published posts, both from January 2024.
 
@@ -182,7 +184,9 @@ Testing is scaled to real risk. Most of this site is static markup that either r
 1. Work on a `redesign` branch.
 2. Vercel builds a preview on every push.
 3. Merge to `main` once approved; the existing domain and Vercel project are reused.
-4. Add a Vercel cron that calls a deploy hook daily to refresh dev.to posts.
+4. Add a scheduled GitHub Actions workflow that calls a Vercel deploy hook daily to refresh dev.to posts.
+
+   *Corrected during the final fix wave (2026-08-15).* This originally said "Add a Vercel cron." See the correction under "dev.to integration" above — Vercel Cron needs a serverless function to invoke, which a fully static site does not have. The shipped mechanism is `.github/workflows/refresh.yml`.
 
 The current site stays live throughout.
 

@@ -1304,7 +1304,15 @@ const EXPECTED = [
   { path: 'dist/work/index.html', marker: 'PerformAI' },
   { path: 'dist/writing/index.html', marker: 'min read' },
 ];
+```
 
+> *Stale — corrected during the final fix wave (2026-08-15).* This `EXPECTED`
+> list only covers three pages. The shipped `scripts/verify-build.mjs` covers
+> all four, adding `{ path: 'dist/about/index.html', marker: 'Away from the
+> keyboard' }`. Regenerating the script from this snippet would silently drop
+> `/about` from build verification.
+
+```js
 const failures = [];
 
 for (const { path, marker } of EXPECTED) {
@@ -1340,6 +1348,21 @@ console.log(
 ```
 
 Leave every other script unchanged.
+
+> *Rejected — corrected during the final fix wave (2026-08-15).* This
+> one-liner is not what shipped. It cannot remove a stale `dist/` before a
+> build that fails before Astro's own static-build phase runs (see the
+> Task 7a problem statement), and it runs `verify-build.mjs` on every
+> platform whenever `astro build` exits non-zero, not only on Windows where
+> the exit code is actually unreliable. What shipped is `scripts/build.mjs`,
+> invoked as `"build": "node scripts/build.mjs"`, which does two things this
+> line does not: (1) unconditionally removes `dist/` before every build, on
+> every platform, so an early failure can never leave stale output behind;
+> and (2) only falls through to `verify-build.mjs` on `process.platform ===
+> 'win32'` — on Linux (including Vercel) a non-zero exit is trusted and
+> fails the build outright, exactly as it should for a genuine failure.
+> Those two things are what make the mechanism defensible; see
+> `scripts/build.mjs` for the full reasoning.
 
 - [ ] **Step 3: Verify a good build now exits 0**
 
@@ -1705,6 +1728,21 @@ appear without manual action. It needs a `VERCEL_DEPLOY_HOOK` repository secret.
 Links and any text under 24px use `#B4470A` at ~5.4:1. The axe checks in
 `tests/e2e/site.spec.ts` enforce this.
 ````
+
+> *Stale — corrected during the final fix wave (2026-08-15).* The Colour
+> section above still states the claim axe disproved during Task 9 (see the
+> correction at the top of this file): `#EE6C1F` does **not** measure ~3.0:1
+> and is **not** permitted on large bold display type. The real figure is
+> **2.99:1**, below WCAG's 3:1 floor even for large text, so `#EE6C1F` is
+> fills and decorative shapes only, never text at any size. Regenerating
+> `README.md` from this template verbatim would reintroduce the exact defect
+> axe caught. The shipped README's Colour section reads:
+>
+> > `#EE6C1F` measures 2.99:1 on the page background — below WCAG's 3:1 floor
+> > even for large text, so it is used for fills and decorative shapes only,
+> > never text. All accent text and links use `#B4470A` at ~5.4:1. The axe
+> > checks in `tests/e2e/site.spec.ts` enforce this, and caught the one place
+> > the rule was broken.
 
 - [ ] **Step 3: Confirm no Remix or Supabase remnants survive**
 
