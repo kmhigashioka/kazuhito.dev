@@ -1,0 +1,58 @@
+---
+import type { Post } from '../lib/devto';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+
+const published = post.publishedAt
+  ? new Date(post.publishedAt).toLocaleDateString('en-GB', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    })
+  : null;
+---
+
+<article class="flex flex-col gap-4 rounded-(--radius-card) border border-border-warm bg-surface p-5 sm:flex-row sm:items-center">
+  <div class="flex-1">
+    <p class="m-0 text-xs font-semibold text-ink-muted">
+      {published && <span>{published}</span>}
+      {published && <span aria-hidden="true"> · </span>}
+      <span>{post.readingTimeMinutes} min read</span>
+    </p>
+
+    <h2 class="mt-1.5 text-xl">
+      <a href={post.url} class="text-ink no-underline hover:text-accent-deep">
+        {post.title}
+      </a>
+    </h2>
+
+    {post.description && (
+      <p class="mt-1.5 text-sm leading-relaxed text-ink-muted">{post.description}</p>
+    )}
+
+    {post.tags.length > 0 && (
+      <ul class="mt-3 flex list-none flex-wrap gap-1.5 p-0">
+        {post.tags.map((tag) => (
+          <li class="rounded-full border border-border-warm px-2.5 py-1 text-xs font-semibold text-ink-muted">
+            {tag}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+
+  {post.coverImage && (
+    <img
+      src={post.coverImage}
+      alt=""
+      loading="lazy"
+      width="200"
+      height="118"
+      class="h-[118px] w-full shrink-0 rounded-lg object-cover sm:w-[200px]"
+    />
+  )}
+</article>
