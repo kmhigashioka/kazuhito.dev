@@ -32,6 +32,7 @@ const EXPECTED = [
   { path: 'dist/work/index.html', marker: 'PerformAI' },
   { path: 'dist/writing/index.html', marker: 'min read' },
   { path: 'dist/about/index.html', marker: 'Away from the keyboard' },
+  { path: 'dist/404.html', marker: "This page" },
 ];
 
 const failures = [];

@@ -6,6 +6,7 @@ const PAGES = [
   { path: '/work', heading: /Things I've built/ },
   { path: '/writing', heading: /^Writing$/ },
   { path: '/about', heading: /About me/ },
+  { path: '/404', heading: /This page doesn't exist/ },
 ];
 
 test.describe('pages render', () => {
