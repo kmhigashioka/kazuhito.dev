@@ -1,14 +1,8 @@
 ---
-import '../styles/theme.css';
+import Base from '../layouts/Base.astro';
+import { profile } from '../content/profile';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Kazuhito Higashioka</title>
-  </head>
-  <body>
-    <h1 class="text-ink">Scaffold works</h1>
-  </body>
-</html>
+<Base title={profile.name} description={profile.tagline}>
+  <h1 class="text-4xl">{profile.name}</h1>
+</Base>

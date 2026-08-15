@@ -1,7 +1,6 @@
 {
-  "build": {
-    "env": {
-      "ENABLE_FILE_SYSTEM_API": "1"
-    }
-  }
+  "redirects": [
+    { "source": "/my-work", "destination": "/work", "permanent": true },
+    { "source": "/contact-me", "destination": "/about", "permanent": true }
+  ]
 }

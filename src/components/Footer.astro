@@ -1,0 +1,16 @@
+---
+import { profile } from '../content/profile';
+---
+
+<footer class="mt-20 border-t border-border-warm py-8 text-sm text-ink-muted">
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <p class="m-0">&copy; {new Date().getFullYear()} {profile.name}</p>
+    <ul class="flex list-none gap-4 p-0">
+      {profile.links.map(({ label, href }) => (
+        <li>
+          <a href={href} class="font-semibold text-accent-deep no-underline">{label}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</footer>

@@ -1,0 +1,32 @@
+---
+import { profile } from '../content/profile';
+
+const { pathname } = Astro.url;
+const links = [
+  { href: '/work', label: 'work' },
+  { href: '/writing', label: 'writing' },
+  { href: '/about', label: 'about' },
+];
+---
+
+<nav aria-label="Main" class="flex items-center justify-between py-8">
+  <a href="/" class="font-display text-lg font-black tracking-tight text-ink no-underline">
+    {profile.shortName.toLowerCase()}
+  </a>
+  <ul class="flex list-none gap-5 p-0 text-sm">
+    {links.map(({ href, label }) => (
+      <li>
+        <a
+          href={href}
+          aria-current={pathname === href ? 'page' : undefined}
+          class:list={[
+            'no-underline',
+            pathname === href ? 'font-bold text-ink' : 'font-medium text-ink-muted',
+          ]}
+        >
+          {label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
