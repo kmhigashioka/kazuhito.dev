@@ -76,10 +76,20 @@ export async function fetchPosts(fetchImpl: typeof fetch = fetch): Promise<Post[
       signal: controller.signal,
     });
 
-    if (!response.ok) return cloneFallback();
+    if (!response.ok) {
+      console.warn(`[devto] falling back to snapshot: HTTP ${response.status}`);
+      return cloneFallback();
+    }
 
-    return normalise(await response.json()) ?? cloneFallback();
-  } catch {
+    const posts = normalise(await response.json());
+    if (posts === null) {
+      console.warn('[devto] falling back to snapshot: malformed or empty response body');
+      return cloneFallback();
+    }
+    return posts;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.warn(`[devto] falling back to snapshot: request failed (${message})`);
     return cloneFallback();
   } finally {
     clearTimeout(timer);

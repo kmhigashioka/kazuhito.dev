@@ -55,7 +55,14 @@ Posts are fetched from the dev.to API at build time. They are **not** stored her
 
 `src/content/devto-snapshot.json` is a committed fallback used whenever the API
 is unreachable, so a dev.to outage can never break a build or empty the writing
-page. Refresh it occasionally by copying a good API response.
+page. It holds the **normalised `Post` shape** used throughout the app
+(`id`, `title`, `description`, `url`, `publishedAt`, `readingTimeMinutes`,
+`tags`, `coverImage`) — **not** a raw copy of a dev.to API response. The API's
+field names differ (`published_at`, `reading_time_minutes`, `tag_list`,
+`social_image`), so refreshing the snapshot means updating it with the
+*normalised* fields, not pasting the API response verbatim. A unit test in
+`src/lib/devto.test.ts` checks every snapshot entry against the `Post` shape;
+run `npm test` after editing it.
 
 A daily GitHub Actions workflow calls a Vercel deploy hook so new dev.to posts
 appear without manual action. It needs a `VERCEL_DEPLOY_HOOK` repository secret.
