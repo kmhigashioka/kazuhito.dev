@@ -68,9 +68,12 @@ function normalise(raw: unknown): Post[] | null {
  * committed snapshot so the build cannot be broken by a third-party outage.
  */
 export async function fetchPosts(fetchImpl: typeof fetch = fetch): Promise<Post[]> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
   try {
     const response = await fetchImpl(ENDPOINT, {
-      signal: AbortSignal.timeout(TIMEOUT_MS),
+      signal: controller.signal,
     });
 
     if (!response.ok) return cloneFallback();
@@ -78,5 +81,7 @@ export async function fetchPosts(fetchImpl: typeof fetch = fetch): Promise<Post[
     return normalise(await response.json()) ?? cloneFallback();
   } catch {
     return cloneFallback();
+  } finally {
+    clearTimeout(timer);
   }
 }

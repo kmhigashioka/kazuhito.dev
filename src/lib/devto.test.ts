@@ -106,4 +106,19 @@ describe('fetchPosts', () => {
     const second = await fetchPosts(failing as unknown as typeof fetch);
     expect(second).toEqual(snapshot);
   });
+
+  it('clears the request timeout on both success and failure so no timer is left dangling', async () => {
+    const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
+
+    clearTimeoutSpy.mockClear();
+    await fetchPosts(respondWith([validApiPost]) as unknown as typeof fetch);
+    expect(clearTimeoutSpy).toHaveBeenCalledTimes(1);
+
+    clearTimeoutSpy.mockClear();
+    const failing = vi.fn().mockRejectedValue(new Error('network down'));
+    await fetchPosts(failing as unknown as typeof fetch);
+    expect(clearTimeoutSpy).toHaveBeenCalledTimes(1);
+
+    clearTimeoutSpy.mockRestore();
+  });
 });
