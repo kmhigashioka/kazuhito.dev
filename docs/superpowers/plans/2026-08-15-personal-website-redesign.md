@@ -18,7 +18,9 @@
 - TypeScript is pinned to `^5.9.3`. Do **not** install TypeScript 7 — `@astrojs/check@0.9.10` predates it and compatibility is unverified.
 - Fonts are self-hosted via Fontsource. No runtime request to Google Fonts or any third-party host.
 - Colour tokens are exact and must not be adjusted: `paper #FFFBF2`, `surface #FFFFFF`, `ink #191410`, `ink-muted #6B6058`, `border-warm #E5D9C7`, `accent #EE6C1F`, `accent-deep #B4470A`, `counter #2E7D6E`, `sun #F7C948`.
-- **`#EE6C1F` may only be used for display type at 24px+ bold, fills, and decorative shapes. Links and any text below 24px use `#B4470A`.** This is a contrast requirement (3.0:1 vs 5.4:1 on paper), verified by the axe pass in Task 9.
+- **`#EE6C1F` may only be used for fills and decorative shapes. It may NOT be used for text at any size. All accent text and links use `#B4470A`.** Contrast requirement, verified by the axe pass in Task 9.
+
+  *Corrected during Task 9.* This constraint originally permitted `#EE6C1F` on display type at 24px+ bold, on the stated basis that it measured 3.0:1 on paper. The real figure is **2.99:1**, which fails WCAG's 3:1 large-text threshold. Axe caught it on the homepage hero; the fragment now uses `#B4470A` (~5.4:1). Tasks 5-8 were implemented under the original, wrong rule, so any `text-accent` on text predating this correction is a defect.
 - Typefaces: Gabarito for display and headings; Schibsted Grotesk for body and UI.
 - Max widths: 68rem for content, 44rem for prose.
 - All motion respects `prefers-reduced-motion`.

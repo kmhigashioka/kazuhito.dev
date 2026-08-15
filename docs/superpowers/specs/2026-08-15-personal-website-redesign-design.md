@@ -68,12 +68,16 @@ Both self-hosted at build time. No third-party font request at runtime.
 | `ink` | `#191410` | Primary text |
 | `ink-muted` | `#6B6058` | Secondary text |
 | `border` | `#E5D9C7` | Hairlines, card edges |
-| `accent` | `#EE6C1F` | Large display type, fills, shapes |
+| `accent` | `#EE6C1F` | Fills and decorative shapes only — never text |
 | `accent-deep` | `#B4470A` | Links and small accent text |
 | `counter` | `#2E7D6E` | Second note, used sparingly |
 | `sun` | `#F7C948` | Warm highlight, shapes only |
 
-**Two tangerines is deliberate.** `#EE6C1F` on `paper` measures roughly 3.0:1 — sufficient for large bold display type, insufficient for body copy and links. Small accent text and links use `#B4470A` at roughly 5.4:1. Same colour family, no visible seam, readable throughout. The accessibility test suite verifies this rather than trusting it.
+**Two tangerines is deliberate.** `#B4470A` carries all accent *text*; `#EE6C1F` is reserved for fills and decorative shapes. Same colour family, no visible seam, readable throughout.
+
+**Corrected 2026-08-15 during implementation.** This section originally claimed `#EE6C1F` measures "roughly 3.0:1" on `paper` and was therefore "sufficient for large bold display type." That was a rounding error, and the rounding was the whole question. The true figure is **2.99:1** — relative luminance 0.28997 against paper's 0.96666, giving (0.96666 + 0.05) / (0.28997 + 0.05) = 2.99 — which falls *below* WCAG's 3:1 large-text threshold rather than meeting it.
+
+So `#EE6C1F` is not usable for text at any size. The homepage hero fragment that originally used it now uses `#B4470A` (~5.4:1), a slightly deeper orange. This was caught by the axe pass in the test suite, not by review — which is the argument for having written that gate rather than trusting the arithmetic.
 
 ### Other tokens
 
