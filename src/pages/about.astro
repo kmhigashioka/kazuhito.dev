@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import HobbyCard from '../components/HobbyCard.astro';
+import { profile } from '../content/profile';
+
+const accents = ['bg-sun/30', 'bg-counter/20', 'bg-accent/20'];
+---
+
+<Base
+  title="About — Kazuhito Higashioka"
+  description="A software developer from the Philippines, eleven years in."
+>
+  <div class="flex flex-col gap-8 py-8 md:flex-row md:gap-12">
+    <div class="flex-[1.6]">
+      <h1 class="text-3xl sm:text-4xl">About me</h1>
+      {profile.about.map((paragraph) => (
+        <p class="mt-4 max-w-(--spacing-prose) text-base leading-loose">{paragraph}</p>
+      ))}
+    </div>
+
+    <div class="flex-1">
+      <div
+        class="aspect-square w-full rounded-2xl bg-linear-to-br from-sun to-accent"
+        aria-hidden="true"
+      ></div>
+    </div>
+  </div>
+
+  <section class="mt-10 border-t border-border-warm pt-8">
+    <h2 class="text-xs font-bold uppercase tracking-[0.16em] text-ink-muted">
+      Away from the keyboard
+    </h2>
+    <div class="mt-4 grid gap-3 sm:grid-cols-3">
+      {profile.hobbies.map((hobby, i) => (
+        <HobbyCard hobby={hobby} accent={accents[i % accents.length]} />
+      ))}
+    </div>
+  </section>
+
+  <section class="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-border-warm pt-8">
+    <div>
+      <h2 class="text-lg">Say hi</h2>
+      <p class="mt-1 text-sm text-ink-muted">{profile.email}</p>
+    </div>
+    <ul class="flex list-none flex-wrap gap-2.5 p-0">
+      {profile.links.map(({ label, href }) => (
+        <li>
+          <a
+            href={href}
+            class="rounded-full border-[1.5px] border-border-warm px-4 py-2.5 text-sm font-bold text-ink no-underline"
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
