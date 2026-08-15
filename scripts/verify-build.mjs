@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 
 /**
  * Astro's CLI calls process.exit(), which on Windows races an open socket
@@ -20,6 +20,12 @@ import { existsSync, readFileSync } from 'node:fs';
  * string is present somewhere in the file; it cannot detect truncation
  * that occurs after the marker (e.g. a page cut off mid-render past the
  * point where the marker appears).
+ *
+ * Page HTML alone is not enough: Astro copies public/ and finalises hashed
+ * assets under dist/_astro/ AFTER page generation, so a build that fails
+ * during that later asset-copy phase would still leave complete, correct
+ * page HTML behind and pass a page-only check. The favicon and CSS checks
+ * below catch that gap.
  */
 const EXPECTED = [
   { path: 'dist/index.html', marker: 'I build software' },
@@ -41,6 +47,16 @@ for (const { path, marker } of EXPECTED) {
   } else if (!html.includes(marker)) {
     failures.push(`${path} does not contain expected content (${marker})`);
   }
+}
+
+if (!existsSync('dist/favicon.ico')) {
+  failures.push('dist/favicon.ico is missing');
+}
+
+if (!existsSync('dist/_astro')) {
+  failures.push('dist/_astro is missing');
+} else if (!readdirSync('dist/_astro').some((f) => f.endsWith('.css'))) {
+  failures.push('dist/_astro contains no .css file');
 }
 
 if (failures.length > 0) {
