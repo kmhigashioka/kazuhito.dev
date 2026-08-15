@@ -24,32 +24,179 @@
 
   --spacing-prose: 44rem;
   --spacing-content: 68rem;
+
+  /* Springs, not beziers. A bezier is symmetric and prescribed; a spring
+     decelerates the way a physical object does, which is what makes motion
+     read as behaviour rather than as animation. `linear()` samples a real
+     spring solution, so these are the actual curves — no JS, no library.
+     Parameterised the way Apple parameterises them: damping ratio (overshoot)
+     and response (how fast it reaches target), not mass/stiffness/damping.
+
+     Damping 1.0, response 0.35s: critically damped, no overshoot. There is
+     deliberately only one curve here. Overshoot belongs to motion the user
+     threw — a flick, a drag release — and this site has no gesture surface,
+     so a bouncy variant would only ever be decoration pretending to be
+     physics. Pair the curve with its settle time as the duration (below), or
+     it is being replayed at the wrong speed. It looks "done" at roughly half
+     that duration; the tail is the spring settling, imperceptible on its own
+     but the reason the motion does not feel clipped. */
+  --ease-settle: linear(0, 0.0571, 0.1793, 0.3192, 0.4533, 0.571, 0.6691, 0.7483, 0.8106, 0.8587, 0.8954, 0.9231, 0.9437, 0.959, 0.9703, 0.9785, 0.9845, 0.9889, 0.992, 0.9943, 0.9959, 0.9971, 0.9979, 0.9985, 1);
+
+  /* Shadows carry the hue of the surface they fall on. Pure black at low
+     opacity on a cream page reads as grey dirt. */
+  --shadow-lift: 0 1px 2px rgb(74 52 28 / 0.05), 0 10px 28px -10px rgb(74 52 28 / 0.16);
+  --shadow-mark: 0 12px 32px -12px rgb(74 52 28 / 0.28);
 }
 
 @layer base {
+  /* Settle time for the curve above — not a Tailwind theme namespace, so these
+     live here rather than in @theme. Using a shorter duration truncates the
+     spring; using a longer one stretches it flat. */
+  :root {
+    --duration-settle: 500ms;
+    /* Press feedback is not a spring — it is a direct response, and it has to
+       land before the user perceives lag. */
+    --duration-press: 90ms;
+  }
+
   html {
     background-color: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-body);
+    font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    /* Clears the sticky header when an in-page anchor is targeted. */
+    scroll-padding-top: 5.5rem;
   }
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 800;
-    letter-spacing: -0.03em;
+    text-wrap: balance;
   }
+
+  /* Tracking is size-specific. Letterforms read progressively further apart
+     as they grow, so display type needs negative tracking and small type
+     needs roughly none — a single blanket value is necessarily wrong at one
+     end of the scale. Weight carries hierarchy alongside size, which buys
+     presence without buying width. */
+  h1 { font-weight: 800; letter-spacing: -0.035em; }
+  h2 { font-weight: 800; letter-spacing: -0.025em; }
+  h3 { font-weight: 700; letter-spacing: -0.015em; }
+  h4 { font-weight: 700; letter-spacing: -0.005em; }
+
+  p { text-wrap: pretty; }
 
   a {
     color: var(--color-accent-deep);
   }
+
+  /* One visible, palette-native focus ring for keyboard users, rather than
+     four browser defaults that all disagree with the page. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent-deep);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* Paper tooth. Flat vector surfaces read as sterile; this is the texture a
+     cream page implies. Deliberately near the threshold of perception. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 }
 
+/* Feedback lands on pointer-down, not on release. Waiting for the click to
+   commit before showing anything is the single most common way an interface
+   stops feeling direct. */
+@utility pressable {
+  transition-property: transform, box-shadow, background-color, border-color, color;
+  transition-duration: var(--duration-settle);
+  transition-timing-function: var(--ease-settle);
+
+  &:active {
+    transform: scale(0.97);
+    transition-duration: var(--duration-press);
+  }
+}
+
+/* Hover lift for surfaces that are actually clickable. A card that lifts but
+   does nothing is a lie about what is interactive. */
+@utility liftable {
+  transition-property: transform, box-shadow, border-color;
+  transition-duration: var(--duration-settle);
+  transition-timing-function: var(--ease-settle);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+    border-color: color-mix(in oklab, var(--color-accent) 35%, var(--color-border-warm));
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(0.995);
+    transition-duration: var(--duration-press);
+  }
+}
+
+/* Makes the whole card the hit target without adding a wrapping element or a
+   second link for screen readers to announce. */
+@utility stretch-target {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+}
+
+/* Reduced motion means a gentler equivalent, not the absence of feedback.
+   Colour, opacity and shadow still transition — they aid comprehension and
+   provoke no vestibular response. Movement is what goes. */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    transition-property: opacity, color, background-color, border-color, box-shadow !important;
+    transition-duration: 150ms !important;
+    transition-timing-function: ease !important;
+  }
+
+  .pressable:active,
+  .liftable:hover,
+  .liftable:active {
+    transform: none !important;
+  }
+}
+
+/* Translucent chrome becomes frosted-to-solid rather than blurred. */
+@media (prefers-reduced-transparency: reduce) {
+  .chrome-translucent {
+    background-color: var(--color-paper);
+    backdrop-filter: none;
+  }
+}
+
+/* Near-solid surfaces with defined edges, and no texture competing with text. */
+@media (prefers-contrast: more) {
+  .chrome-translucent {
+    background-color: var(--color-paper);
+    backdrop-filter: none;
+    border-bottom: 1px solid var(--color-ink);
+  }
+
+  body::after {
+    display: none;
   }
 }

@@ -18,13 +18,13 @@ const total = employers.reduce((n, e) => n + e.projects.length, 0);
   </header>
 
   {employers.map((employer) => (
-    <section class="mt-10">
+    <section class="mt-12">
       <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <h2 class="text-xl">{employer.name}</h2>
         <p class="m-0 text-sm text-ink-muted">{employer.role} · {employer.period}</p>
       </div>
 
-      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+      <div class="mt-5 grid gap-4 sm:grid-cols-2">
         {employer.projects.map((project) => <ProjectCard project={project} />)}
       </div>
     </section>

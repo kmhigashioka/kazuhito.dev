@@ -13,8 +13,13 @@ const pages = [
   <div class="flex flex-col items-start gap-10 py-10 md:flex-row md:items-center md:gap-14 md:py-16">
     <div class="flex-[1.7]">
       <h1 class="text-4xl leading-[1.03] sm:text-5xl">
-        Hi, I'm {profile.shortName}.<br />
-        I build software<br />
+        {/*
+          The trailing spaces before each <br /> are load-bearing: without them
+          the heading's text content runs together as "softwarefor humans" for
+          anything reading it as a string rather than rendering it.
+        */}
+        Hi, I'm {profile.shortName}. <br />
+        I build software <br />
         <span class="text-accent-deep">for humans.</span>
       </h1>
 
@@ -27,10 +32,11 @@ const pages = [
           <a
             href={href}
             class:list={[
-              'rounded-full px-5 py-3 text-sm font-bold no-underline',
+              'pressable inline-block rounded-full px-5 py-3 text-sm font-bold no-underline',
+              'hover:shadow-lift',
               primary
-                ? 'bg-ink text-paper'
-                : 'border-[1.5px] border-border-warm text-ink',
+                ? 'bg-ink text-paper hover:bg-ink/90'
+                : 'border-[1.5px] border-border-warm bg-transparent text-ink hover:border-accent/45 hover:bg-surface',
             ]}
           >
             {label}
@@ -41,14 +47,26 @@ const pages = [
       <ul class="mt-6 flex list-none flex-wrap gap-4 p-0 text-sm">
         {profile.links.map(({ label, href }) => (
           <li>
-            <a href={href} class="font-semibold text-accent-deep no-underline">{label}</a>
+            <a
+              href={href}
+              class="pressable group relative inline-block font-semibold text-accent-deep no-underline"
+            >
+              {label}
+              <span
+                aria-hidden="true"
+                class="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 rounded-full bg-accent-deep transition-transform duration-(--duration-settle) ease-settle group-hover:scale-x-100"
+              ></span>
+            </a>
           </li>
         ))}
       </ul>
     </div>
 
     <div class="flex flex-1 justify-center">
-      <div class="relative h-[150px] w-[150px] rounded-full bg-sun" aria-hidden="true">
+      <div
+        class="relative h-[150px] w-[150px] rounded-full bg-sun shadow-mark"
+        aria-hidden="true"
+      >
         <div class="absolute inset-0 rounded-full bg-accent [clip-path:inset(0_0_0_50%)]"></div>
         <div class="absolute -bottom-3.5 -left-5 h-[60px] w-[60px] rounded-full bg-counter"></div>
       </div>

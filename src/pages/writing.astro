@@ -20,13 +20,37 @@ const devtoUrl = profile.links.find((l) => l.label === 'dev.to')!.href;
     </p>
   </header>
 
-  <div class="grid gap-3">
-    {posts.map((post) => <PostCard post={post} />)}
-  </div>
+  {/*
+    The snapshot fallback in lib/devto.ts means this should never render. It
+    exists so that if it ever does, the page reads as deliberate rather than
+    as a build that quietly dropped its content.
+  */}
+  {posts.length > 0 ? (
+    <div class="grid gap-4">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+  ) : (
+    <p class="rounded-(--radius-card) border border-border-warm bg-surface p-6 text-sm text-ink-muted">
+      The post list couldn't be loaded right now. Everything I've written is on
+      dev.to.
+    </p>
+  )}
 
   <p class="mt-6">
-    <a href={devtoUrl} class="text-sm font-semibold text-accent-deep no-underline">
-      All posts on dev.to →
+    {/*
+      The arrow moves the way the link is about to take you. Intermediate
+      motion that points at the outcome is easier to read than motion that
+      merely marks "something is hoverable".
+    */}
+    <a
+      href={devtoUrl}
+      class="pressable group inline-flex items-center gap-1.5 text-sm font-semibold text-accent-deep no-underline"
+    >
+      All posts on dev.to
+      <span
+        aria-hidden="true"
+        class="inline-block transition-transform duration-(--duration-settle) ease-settle group-hover:translate-x-1"
+      >→</span>
     </a>
   </p>
 </Base>

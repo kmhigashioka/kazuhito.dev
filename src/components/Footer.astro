@@ -8,7 +8,16 @@ import { profile } from '../content/profile';
     <ul class="flex list-none gap-4 p-0">
       {profile.links.map(({ label, href }) => (
         <li>
-          <a href={href} class="font-semibold text-accent-deep no-underline">{label}</a>
+          <a
+            href={href}
+            class="pressable group relative inline-block font-semibold text-accent-deep no-underline"
+          >
+            {label}
+            <span
+              aria-hidden="true"
+              class="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 rounded-full bg-accent-deep transition-transform duration-(--duration-settle) ease-settle group-hover:scale-x-100"
+            ></span>
+          </a>
         </li>
       ))}
     </ul>
