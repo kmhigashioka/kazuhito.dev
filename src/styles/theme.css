@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@import "@fontsource-variable/gabarito";
+@import "@fontsource-variable/schibsted-grotesk";
+
+@theme {
+  --color-paper: #FFFBF2;
+  --color-surface: #FFFFFF;
+  --color-ink: #191410;
+  --color-ink-muted: #6B6058;
+  --color-border-warm: #E5D9C7;
+  --color-accent: #EE6C1F;
+  --color-accent-deep: #B4470A;
+  --color-counter: #2E7D6E;
+  --color-sun: #F7C948;
+
+  --font-display: "Gabarito Variable", system-ui, sans-serif;
+  --font-body: "Schibsted Grotesk Variable", system-ui, sans-serif;
+
+  --radius-card: 14px;
+
+  --spacing-prose: 44rem;
+  --spacing-content: 68rem;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  a {
+    color: var(--color-accent-deep);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
