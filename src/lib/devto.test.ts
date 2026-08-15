@@ -93,4 +93,17 @@ describe('fetchPosts', () => {
     const posts = await fetchPosts(respondWith([]) as unknown as typeof fetch);
     expect(posts.length).toBeGreaterThan(0);
   });
+
+  it('never exposes the snapshot to caller mutation', async () => {
+    const failing = vi.fn().mockRejectedValue(new Error('network down'));
+
+    const first = await fetchPosts(failing as unknown as typeof fetch);
+    first.sort(() => 1);
+    first.reverse();
+    first.push({ ...first[0], id: -1 });
+    first[0].title = 'mutated by caller';
+
+    const second = await fetchPosts(failing as unknown as typeof fetch);
+    expect(second).toEqual(snapshot);
+  });
 });

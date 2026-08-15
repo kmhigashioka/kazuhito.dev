@@ -16,6 +16,15 @@ const TIMEOUT_MS = 5000;
 
 const FALLBACK: Post[] = snapshot as Post[];
 
+/**
+ * Returns a deep copy of the fallback snapshot so callers can never mutate
+ * the module's own state. Each call to `fetchPosts` that hits a failure path
+ * must get its own pristine array of its own pristine posts.
+ */
+function cloneFallback(): Post[] {
+  return structuredClone(FALLBACK);
+}
+
 function toPost(raw: unknown): Post | null {
   if (typeof raw !== 'object' || raw === null) return null;
   const a = raw as Record<string, unknown>;
@@ -64,10 +73,10 @@ export async function fetchPosts(fetchImpl: typeof fetch = fetch): Promise<Post[
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
 
-    if (!response.ok) return FALLBACK;
+    if (!response.ok) return cloneFallback();
 
-    return normalise(await response.json()) ?? FALLBACK;
+    return normalise(await response.json()) ?? cloneFallback();
   } catch {
-    return FALLBACK;
+    return cloneFallback();
   }
 }
