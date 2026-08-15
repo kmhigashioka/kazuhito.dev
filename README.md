@@ -32,6 +32,14 @@ with plain `astro build` — it's load-bearing, not indirection:
 Adding a new page means adding it to the `EXPECTED` list in
 `scripts/verify-build.mjs`, or the guard silently stops covering it.
 
+`vercel.json` pins `framework`, `buildCommand` and `outputDirectory`. That is
+deliberate: this Vercel project was created in 2021 for a Remix app, and its
+dashboard Framework Preset was still set to Remix — so the first deploy of this
+rewrite failed with `Failed to resolve "@remix-run/dev"`, building the wrong
+framework entirely. Settings in `vercel.json` override the dashboard, so the
+repo now decides how it is built. Don't remove them expecting auto-detection to
+cover it.
+
 ## Test
 
 ```sh

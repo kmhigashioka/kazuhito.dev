@@ -1,4 +1,7 @@
 {
+  "framework": "astro",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "redirects": [
     { "source": "/my-work", "destination": "/work", "permanent": true },
     { "source": "/contact-me", "destination": "/about", "permanent": true }
