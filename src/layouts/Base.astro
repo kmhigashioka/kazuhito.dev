@@ -9,6 +9,7 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -21,13 +22,26 @@ const { title, description } = Astro.props;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <!-- Matches the page background so mobile browser chrome joins the page
+         rather than framing it in default white. -->
+    <meta name="theme-color" content="#FFFBF2" />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.ico" sizes="any" />
   </head>
   <body class="bg-paper text-ink">
+    <a
+      href="#main"
+      class="pressable sr-only rounded-full bg-ink px-5 py-3 text-sm font-bold text-paper no-underline focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[70]"
+    >
+      Skip to content
+    </a>
+
+    <Nav />
+
     <div class="mx-auto w-full max-w-(--spacing-content) px-6">
-      <Nav />
-      <main><slot /></main>
+      <main id="main"><slot /></main>
       <Footer />
     </div>
   </body>
