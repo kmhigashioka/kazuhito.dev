@@ -1,34 +1,46 @@
-# Welcome to Remix!
+# kazuhito.dev
 
-- [Remix Docs](https://remix.run/docs)
+Personal site. Static [Astro](https://astro.build) build, deployed on Vercel.
 
-## Deployment
-
-After having run the `create-remix` command and selected "Vercel" as a deployment target, you only need to [import your Git repository](https://vercel.com/new) into Vercel, and it will be deployed.
-
-If you'd like to avoid using a Git repository, you can also deploy the directory by running [Vercel CLI](https://vercel.com/cli):
-
-```sh
-npm i -g vercel
-vercel
-```
-
-It is generally recommended to use a Git repository, because future commits will then automatically be deployed by Vercel, through its [Git Integration](https://vercel.com/docs/concepts/git).
-
-## Development
-
-To run your Remix app locally, make sure your project's local dependencies are installed:
+## Develop
 
 ```sh
 npm install
-```
-
-Afterwards, start the Remix development server like so:
-
-```sh
 npm run dev
 ```
 
-Open up [http://localhost:3000](http://localhost:3000) and you should be ready to go!
+## Test
 
-If you're used to using the `vercel dev` command provided by [Vercel CLI](https://vercel.com/cli) instead, you can also use that, but it's not needed.
+```sh
+npm test          # unit tests (Vitest)
+npm run test:e2e  # smoke + accessibility (Playwright)
+npm run check     # TypeScript
+```
+
+## Content
+
+Everything editable lives in `src/content/`:
+
+- `projects.ts` — work history and projects
+- `profile.ts` — intro, about copy, hobbies, links
+
+Edit, commit, push. Vercel rebuilds.
+
+## Writing
+
+Posts are fetched from the dev.to API at build time. They are **not** stored here.
+
+`src/content/devto-snapshot.json` is a committed fallback used whenever the API
+is unreachable, so a dev.to outage can never break a build or empty the writing
+page. Refresh it occasionally by copying a good API response.
+
+A daily GitHub Actions workflow calls a Vercel deploy hook so new dev.to posts
+appear without manual action. It needs a `VERCEL_DEPLOY_HOOK` repository secret.
+
+## Colour
+
+`#EE6C1F` measures 2.99:1 on the page background — below WCAG's 3:1 floor even
+for large text, so it is used for fills and decorative shapes only, never text.
+All accent text and links use `#B4470A` at ~5.4:1. The axe checks in
+`tests/e2e/site.spec.ts` enforce this; they caught the one place it was got
+wrong.
