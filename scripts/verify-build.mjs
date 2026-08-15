@@ -6,9 +6,20 @@ import { existsSync, readFileSync } from 'node:fs';
  * after the build has already written correct output. The exit code is
  * therefore unreliable on that platform, so we verify the artifacts instead.
  *
- * This runs ONLY when `astro build` exited non-zero. A genuine build failure
- * leaves dist absent or incomplete (Astro empties the directory at build
- * start), so this still fails loudly.
+ * This runs ONLY when `astro build` exited non-zero (invoked by
+ * scripts/build.mjs, Windows path only). It relies on scripts/build.mjs
+ * having removed dist/ immediately before running `astro build` — NOT on
+ * any guarantee from Astro itself. Astro only empties dist/ inside its
+ * static-build phase, which runs after config validation and content-
+ * collection loading, so a failure earlier than that would otherwise leave
+ * a stale, previously-valid dist/ for this script to find and wrongly pass.
+ * With dist/ pre-removed by the caller, a genuine failure at any point
+ * leaves it absent or incomplete, so this still fails loudly.
+ *
+ * Known limitation (accepted): the marker check only confirms the marker
+ * string is present somewhere in the file; it cannot detect truncation
+ * that occurs after the marker (e.g. a page cut off mid-render past the
+ * point where the marker appears).
  */
 const EXPECTED = [
   { path: 'dist/index.html', marker: 'I build software' },
