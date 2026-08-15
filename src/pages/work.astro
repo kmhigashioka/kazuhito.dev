@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { employers } from '../content/projects';
+
+const total = employers.reduce((n, e) => n + e.projects.length, 0);
+---
+
+<Base
+  title="Work — Kazuhito Higashioka"
+  description="Ten projects across four companies and eleven years of software development."
+>
+  <header class="py-8">
+    <h1 class="text-3xl sm:text-4xl">Things I've built</h1>
+    <p class="mt-2 text-base text-ink-muted">
+      {total} projects, {employers.length} companies, eleven years.
+    </p>
+  </header>
+
+  {employers.map((employer) => (
+    <section class="mt-10">
+      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <h2 class="text-xl">{employer.name}</h2>
+        <p class="m-0 text-sm text-ink-muted">{employer.role} · {employer.period}</p>
+      </div>
+
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {employer.projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </section>
+  ))}
+</Base>
