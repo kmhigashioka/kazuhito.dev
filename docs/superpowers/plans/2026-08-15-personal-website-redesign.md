@@ -767,7 +767,7 @@ git commit -m "feat: fetch dev.to posts with snapshot fallback"
 
 **Interfaces:**
 - Consumes: `profile` from `src/content/profile.ts`; tokens from `theme.css`
-- Produces: `Base.astro` accepting props `{ title: string; description: string; wide?: boolean }`, rendering `<slot />` inside `<main>`
+- Produces: `Base.astro` accepting props `{ title: string; description: string }`, rendering `<slot />` inside `<main>`
 
 - [ ] **Step 1: Write `src/components/Nav.astro`**
 
