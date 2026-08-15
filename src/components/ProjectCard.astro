@@ -27,7 +27,10 @@ const { project } = Astro.props;
 
   <h3 class="text-lg">
     {project.link ? (
-      <a href={project.link} class="text-ink no-underline hover:text-accent-deep">
+      <a
+        href={project.link}
+        class="text-ink underline decoration-border-warm underline-offset-4 hover:text-accent-deep"
+      >
         {project.title}
       </a>
     ) : (

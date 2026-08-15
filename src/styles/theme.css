@@ -9,6 +9,9 @@
   --color-ink: #191410;
   --color-ink-muted: #6B6058;
   --color-border-warm: #E5D9C7;
+  /* Fills and decorative shapes ONLY — never text. Measures 2.99:1 on the
+     page background, below WCAG's 3:1 floor even for large text. All accent
+     text and links must use --color-accent-deep instead. */
   --color-accent: #EE6C1F;
   --color-accent-deep: #B4470A;
   --color-counter: #2E7D6E;
