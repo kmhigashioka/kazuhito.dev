@@ -8,3 +8,6 @@ dist
 .superpowers
 test-results
 playwright-report
+
+# Working documents about how the site got built, not part of the site.
+docs/superpowers/
