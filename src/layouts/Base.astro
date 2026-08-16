@@ -28,7 +28,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
          rather than framing it in default white. -->
     <meta name="theme-color" content="#FFFBF2" />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body class="bg-paper text-ink">
     <a

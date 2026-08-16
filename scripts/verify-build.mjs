@@ -50,8 +50,10 @@ for (const { path, marker } of EXPECTED) {
   }
 }
 
-if (!existsSync('dist/favicon.ico')) {
-  failures.push('dist/favicon.ico is missing');
+for (const icon of ['dist/favicon.ico', 'dist/favicon.svg']) {
+  if (!existsSync(icon)) {
+    failures.push(`${icon} is missing`);
+  }
 }
 
 if (!existsSync('dist/_astro')) {
