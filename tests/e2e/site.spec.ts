@@ -35,6 +35,17 @@ test('work page lists all ten projects', async ({ page }) => {
   await expect(page.locator('article')).toHaveCount(10);
 });
 
+test('the mark is decorative and appears once per page that uses it', async ({ page }) => {
+  await page.goto('/');
+  const mark = page.locator('[data-mark]');
+  await expect(mark).toHaveCount(1);
+  await expect(mark).toHaveAttribute('aria-hidden', 'true');
+
+  // The mark carries no information the copy does not already give, so it
+  // must contribute no accessible name.
+  expect(await mark.evaluate((el) => el.textContent?.trim())).toBe('');
+});
+
 test('writing page links out to dev.to', async ({ page }) => {
   await page.goto('/writing');
   const links = page.locator('article a[href*="dev.to"]');
