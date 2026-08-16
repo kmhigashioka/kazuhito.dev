@@ -18,7 +18,9 @@
 - TypeScript is pinned to `^5.9.3`. Do **not** install TypeScript 7 — `@astrojs/check@0.9.10` predates it and compatibility is unverified.
 - Fonts are self-hosted via Fontsource. No runtime request to Google Fonts or any third-party host.
 - Colour tokens are exact and must not be adjusted: `paper #FFFBF2`, `surface #FFFFFF`, `ink #191410`, `ink-muted #6B6058`, `border-warm #E5D9C7`, `accent #EE6C1F`, `accent-deep #B4470A`, `counter #2E7D6E`, `sun #F7C948`.
-- **`#EE6C1F` may only be used for display type at 24px+ bold, fills, and decorative shapes. Links and any text below 24px use `#B4470A`.** This is a contrast requirement (3.0:1 vs 5.4:1 on paper), verified by the axe pass in Task 9.
+- **`#EE6C1F` may only be used for fills and decorative shapes. It may NOT be used for text at any size. All accent text and links use `#B4470A`.** Contrast requirement, verified by the axe pass in Task 9.
+
+  *Corrected during Task 9.* This constraint originally permitted `#EE6C1F` on display type at 24px+ bold, on the stated basis that it measured 3.0:1 on paper. The real figure is **2.99:1**, which fails WCAG's 3:1 large-text threshold. Axe caught it on the homepage hero; the fragment now uses `#B4470A` (~5.4:1). Tasks 5-8 were implemented under the original, wrong rule, so any `text-accent` on text predating this correction is a defect.
 - Typefaces: Gabarito for display and headings; Schibsted Grotesk for body and UI.
 - Max widths: 68rem for content, 44rem for prose.
 - All motion respects `prefers-reduced-motion`.
@@ -767,7 +769,7 @@ git commit -m "feat: fetch dev.to posts with snapshot fallback"
 
 **Interfaces:**
 - Consumes: `profile` from `src/content/profile.ts`; tokens from `theme.css`
-- Produces: `Base.astro` accepting props `{ title: string; description: string; wide?: boolean }`, rendering `<slot />` inside `<main>`
+- Produces: `Base.astro` accepting props `{ title: string; description: string }`, rendering `<slot />` inside `<main>`
 
 - [ ] **Step 1: Write `src/components/Nav.astro`**
 
@@ -1258,6 +1260,130 @@ git commit -m "feat: add writing page backed by dev.to"
 
 ---
 
+## Task 7a: Artifact-based build verification (plan amendment)
+
+**Added 2026-08-15 during execution.** Not in the original plan — added in response to a defect found while implementing Task 7, with the user's approval.
+
+**The problem.** `astro build` produces complete, correct output, prints `Complete!`, and then crashes on process exit with a non-zero code:
+
+```
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c
+```
+
+The cause is not this project's code. A bare `fetch` followed by `process.exit(0)`, with no abort signal involved, reproduces it exactly; the same fetch allowed to exit naturally is clean. Astro's CLI calls `process.exit()`, and on Windows that races an open socket handle left by a successful fetch. Verified on Node 24.15.0 and 24.19.0 — the assertion moves from line 76 to line 94 between releases, so the code changed but the bug persists.
+
+The assertion lives in libuv's `src/win/async.c`, a Windows-only source path, so Vercel's Linux builders cannot hit this specific assertion. The impact is local: Task 9's Playwright config runs `npm run build && npm run preview`, and the `&&` means preview never starts on Windows, blocking the entire E2E and accessibility suite.
+
+**The fix.** Judge build success by whether the expected artifacts exist, not by the exit code.
+
+**Files:**
+- Create: `scripts/verify-build.mjs`
+- Modify: `package.json` (build script)
+
+**Interfaces:**
+- Consumes: `dist/` output
+- Produces: a `build` script that exits 0 on a complete build and non-zero otherwise
+
+- [ ] **Step 1: Write `scripts/verify-build.mjs`**
+
+```js
+import { existsSync, readFileSync } from 'node:fs';
+
+/**
+ * Astro's CLI calls process.exit(), which on Windows races an open socket
+ * handle left by a successful build-time fetch and trips a libuv assertion —
+ * after the build has already written correct output. The exit code is
+ * therefore unreliable on that platform, so we verify the artifacts instead.
+ *
+ * This runs ONLY when `astro build` exited non-zero. A genuine build failure
+ * leaves dist absent or incomplete (Astro empties the directory at build
+ * start), so this still fails loudly.
+ */
+const EXPECTED = [
+  { path: 'dist/index.html', marker: 'I build software' },
+  { path: 'dist/work/index.html', marker: 'PerformAI' },
+  { path: 'dist/writing/index.html', marker: 'min read' },
+];
+```
+
+> *Stale — corrected during the final fix wave (2026-08-15).* This `EXPECTED`
+> list only covers three pages. The shipped `scripts/verify-build.mjs` covers
+> all four, adding `{ path: 'dist/about/index.html', marker: 'Away from the
+> keyboard' }`. Regenerating the script from this snippet would silently drop
+> `/about` from build verification.
+
+```js
+const failures = [];
+
+for (const { path, marker } of EXPECTED) {
+  if (!existsSync(path)) {
+    failures.push(`${path} is missing`);
+    continue;
+  }
+  const html = readFileSync(path, 'utf8');
+  if (html.length === 0) {
+    failures.push(`${path} is empty`);
+  } else if (!html.includes(marker)) {
+    failures.push(`${path} does not contain expected content (${marker})`);
+  }
+}
+
+if (failures.length > 0) {
+  console.error('Build verification FAILED — the build genuinely broke:');
+  for (const failure of failures) console.error(`  - ${failure}`);
+  process.exit(1);
+}
+
+console.log(
+  'Build verification passed: all pages present and populated.\n' +
+    'astro build exited non-zero, which on Windows is the known libuv\n' +
+    'teardown crash after a successful build, not a build failure.',
+);
+```
+
+- [ ] **Step 2: Update the `build` script in `package.json`**
+
+```json
+"build": "astro build || node scripts/verify-build.mjs",
+```
+
+Leave every other script unchanged.
+
+> *Rejected — corrected during the final fix wave (2026-08-15).* This
+> one-liner is not what shipped. It cannot remove a stale `dist/` before a
+> build that fails before Astro's own static-build phase runs (see the
+> Task 7a problem statement), and it runs `verify-build.mjs` on every
+> platform whenever `astro build` exits non-zero, not only on Windows where
+> the exit code is actually unreliable. What shipped is `scripts/build.mjs`,
+> invoked as `"build": "node scripts/build.mjs"`, which does two things this
+> line does not: (1) unconditionally removes `dist/` before every build, on
+> every platform, so an early failure can never leave stale output behind;
+> and (2) only falls through to `verify-build.mjs` on `process.platform ===
+> 'win32'` — on Linux (including Vercel) a non-zero exit is trusted and
+> fails the build outright, exactly as it should for a genuine failure.
+> Those two things are what make the mechanism defensible; see
+> `scripts/build.mjs` for the full reasoning.
+
+- [ ] **Step 3: Verify a good build now exits 0**
+
+Run: `npm run build` then check the exit code.
+Expected: exit code 0. On Windows the verification message appears after the assertion; on Linux `astro build` succeeds outright and the script never runs.
+
+- [ ] **Step 4: Verify a genuinely broken build still fails**
+
+Temporarily introduce a syntax error into `src/pages/index.astro`, run `npm run build`, and confirm it exits non-zero with the verification failure listing the missing page. Then revert with `git checkout -- src/pages/index.astro` and confirm `git status` is clean.
+
+This step is mandatory. A verification script that cannot fail is worse than no verification.
+
+- [ ] **Step 5: Commit**
+
+```bash
+git add scripts/verify-build.mjs package.json
+git commit -m "fix: verify build by artifacts, not exit code"
+```
+
+---
+
 ## Task 8: About page
 
 **Files:**
@@ -1602,6 +1728,21 @@ appear without manual action. It needs a `VERCEL_DEPLOY_HOOK` repository secret.
 Links and any text under 24px use `#B4470A` at ~5.4:1. The axe checks in
 `tests/e2e/site.spec.ts` enforce this.
 ````
+
+> *Stale — corrected during the final fix wave (2026-08-15).* The Colour
+> section above still states the claim axe disproved during Task 9 (see the
+> correction at the top of this file): `#EE6C1F` does **not** measure ~3.0:1
+> and is **not** permitted on large bold display type. The real figure is
+> **2.99:1**, below WCAG's 3:1 floor even for large text, so `#EE6C1F` is
+> fills and decorative shapes only, never text at any size. Regenerating
+> `README.md` from this template verbatim would reintroduce the exact defect
+> axe caught. The shipped README's Colour section reads:
+>
+> > `#EE6C1F` measures 2.99:1 on the page background — below WCAG's 3:1 floor
+> > even for large text, so it is used for fills and decorative shapes only,
+> > never text. All accent text and links use `#B4470A` at ~5.4:1. The axe
+> > checks in `tests/e2e/site.spec.ts` enforce this, and caught the one place
+> > the rule was broken.
 
 - [ ] **Step 3: Confirm no Remix or Supabase remnants survive**
 

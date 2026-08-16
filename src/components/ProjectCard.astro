@@ -1,0 +1,65 @@
+---
+import type { Project } from '../content/types';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+{/*
+  The lift and the whole-card hit target are conditional on there being a link.
+  A card that responds to hover but does nothing when clicked is a lie about
+  what is interactive, and users only have to be caught by it once.
+*/}
+<article
+  class:list={[
+    'relative flex h-full flex-col rounded-(--radius-card) border border-border-warm bg-surface p-5',
+    project.link && 'liftable group',
+  ]}
+>
+  {project.image ? (
+    <img
+      src={project.image}
+      alt=""
+      loading="lazy"
+      width="400"
+      height="112"
+      class="mb-3 h-14 w-full rounded-lg object-cover"
+    />
+  ) : (
+    <div
+      class="mb-3 h-14 w-full rounded-lg bg-linear-to-br from-sun/40 to-accent/25"
+      aria-hidden="true"
+    ></div>
+  )}
+
+  <h3 class="text-lg">
+    {project.link ? (
+      <a
+        href={project.link}
+        class="stretch-target text-ink underline decoration-border-warm underline-offset-4 transition-colors duration-(--duration-settle) ease-settle group-hover:text-accent-deep group-hover:decoration-accent-deep"
+      >
+        {project.title}
+      </a>
+    ) : (
+      project.title
+    )}
+  </h3>
+
+  <p class="mt-1.5 text-sm leading-relaxed text-ink-muted">{project.blurb}</p>
+
+  {/*
+    Pushed to the bottom so the tech rows land on one line across the grid row
+    regardless of how long each blurb runs. Misaligned baselines between
+    side-by-side cards read as breakage, not as variety.
+  */}
+  <ul class="mt-auto flex list-none flex-wrap gap-1.5 p-0 pt-4">
+    {project.tech.map((tech) => (
+      <li class="rounded-full border border-border-warm px-2.5 py-1 text-xs font-semibold text-ink-muted">
+        {tech}
+      </li>
+    ))}
+  </ul>
+</article>

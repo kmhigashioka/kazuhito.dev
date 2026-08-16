@@ -68,12 +68,16 @@ Both self-hosted at build time. No third-party font request at runtime.
 | `ink` | `#191410` | Primary text |
 | `ink-muted` | `#6B6058` | Secondary text |
 | `border` | `#E5D9C7` | Hairlines, card edges |
-| `accent` | `#EE6C1F` | Large display type, fills, shapes |
+| `accent` | `#EE6C1F` | Fills and decorative shapes only — never text |
 | `accent-deep` | `#B4470A` | Links and small accent text |
 | `counter` | `#2E7D6E` | Second note, used sparingly |
 | `sun` | `#F7C948` | Warm highlight, shapes only |
 
-**Two tangerines is deliberate.** `#EE6C1F` on `paper` measures roughly 3.0:1 — sufficient for large bold display type, insufficient for body copy and links. Small accent text and links use `#B4470A` at roughly 5.4:1. Same colour family, no visible seam, readable throughout. The accessibility test suite verifies this rather than trusting it.
+**Two tangerines is deliberate.** `#B4470A` carries all accent *text*; `#EE6C1F` is reserved for fills and decorative shapes. Same colour family, no visible seam, readable throughout.
+
+**Corrected 2026-08-15 during implementation.** This section originally claimed `#EE6C1F` measures "roughly 3.0:1" on `paper` and was therefore "sufficient for large bold display type." That was a rounding error, and the rounding was the whole question. The true figure is **2.99:1** — relative luminance 0.28997 against paper's 0.96666, giving (0.96666 + 0.05) / (0.28997 + 0.05) = 2.99 — which falls *below* WCAG's 3:1 large-text threshold rather than meeting it.
+
+So `#EE6C1F` is not usable for text at any size. The homepage hero fragment that originally used it now uses `#B4470A` (~5.4:1), a slightly deeper orange. This was caught by the axe pass in the test suite, not by review — which is the argument for having written that gate rather than trusting the arithmetic.
 
 ### Other tokens
 
@@ -125,7 +129,9 @@ Per post the page renders: title, description, published date, reading time, tag
 Two requirements, both non-negotiable for a site that should never need attention:
 
 1. **Snapshot fallback.** A committed `src/content/devto-snapshot.json` holds the last known-good post list. If the API is down, rate-limits, times out, or returns something malformed, the build uses the snapshot. The build must never fail and must never ship an empty writing page because of a third-party outage.
-2. **Scheduled rebuild.** Build-time fetching means new posts do not appear until the site rebuilds. A daily Vercel cron calls a deploy hook so new writing appears without manual action.
+2. **Scheduled rebuild.** Build-time fetching means new posts do not appear until the site rebuilds. A daily scheduled GitHub Actions workflow calls a Vercel deploy hook so new writing appears without manual action.
+
+   *Corrected during the final fix wave (2026-08-15).* This originally said "a daily Vercel cron calls a deploy hook." Vercel Cron requires a serverless function to call, and this site is fully static — there is no function for it to invoke. What shipped is `.github/workflows/refresh.yml`, a GitHub Actions workflow on a `schedule` trigger that `curl`s the Vercel deploy hook URL directly.
 
 As of 2026-08-15 the API returns two published posts, both from January 2024.
 
@@ -178,7 +184,9 @@ Testing is scaled to real risk. Most of this site is static markup that either r
 1. Work on a `redesign` branch.
 2. Vercel builds a preview on every push.
 3. Merge to `main` once approved; the existing domain and Vercel project are reused.
-4. Add a Vercel cron that calls a deploy hook daily to refresh dev.to posts.
+4. Add a scheduled GitHub Actions workflow that calls a Vercel deploy hook daily to refresh dev.to posts.
+
+   *Corrected during the final fix wave (2026-08-15).* This originally said "Add a Vercel cron." See the correction under "dev.to integration" above — Vercel Cron needs a serverless function to invoke, which a fully static site does not have. The shipped mechanism is `.github/workflows/refresh.yml`.
 
 The current site stays live throughout.
 

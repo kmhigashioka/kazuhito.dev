@@ -1,0 +1,36 @@
+---
+/**
+ * The bouldering mark: a climbing volume in two facets with a hold on it.
+ *
+ * The two facets are offset apart rather than meeting on a shared edge —
+ * that separation is the whole treatment. Butted together they collapse
+ * into a plain two-tone triangle.
+ *
+ * The viewBox is 102x96, not square. The geometry is fitted to it; forcing
+ * it to 0 0 100 100 clips the right facet.
+ */
+interface Props {
+  size?: number;
+  class?: string;
+}
+
+const { size = 150, class: className } = Astro.props;
+---
+
+<svg
+  data-mark
+  width={size}
+  height={size}
+  viewBox="0 0 102 96"
+  aria-hidden="true"
+  focusable="false"
+  class={className}
+>
+  <path d="M12 86L50 10L90 60Z" fill="var(--color-sun)" transform="translate(-6 3)" />
+  <path d="M50 10L90 60L62 86Z" fill="var(--color-accent)" transform="translate(5 -2)" />
+  <path
+    d="M18 78c0-16 12-24 32-24s32 8 32 24c0 6-4 8-10 8H28c-6 0-10-2-10-8Z"
+    fill="var(--color-counter)"
+    transform="translate(30 53) scale(.34)"
+  />
+</svg>

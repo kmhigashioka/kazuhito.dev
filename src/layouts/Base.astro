@@ -1,0 +1,49 @@
+---
+import '../styles/theme.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <!-- Matches the page background so mobile browser chrome joins the page
+         rather than framing it in default white. -->
+    <meta name="theme-color" content="#FFFBF2" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class="bg-paper text-ink">
+    <a
+      href="#main"
+      class="pressable sr-only rounded-full bg-ink px-5 py-3 text-sm font-bold text-paper no-underline focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[70]"
+    >
+      Skip to content
+    </a>
+
+    <Nav />
+
+    <div class="mx-auto w-full max-w-(--spacing-content) px-6">
+      <main id="main"><slot /></main>
+      <Footer />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+---
+import { profile } from '../content/profile';
+
+const { pathname } = Astro.url;
+const links = [
+  { href: '/work', label: 'work' },
+  { href: '/writing', label: 'writing' },
+  { href: '/about', label: 'about' },
+];
+---
+
+{/*
+  Translucent chrome rather than an opaque strip: content passes underneath and
+  stays partially legible, so the bar reads as a floating layer instead of a
+  slice of viewport the page has lost. At the top of the page the tint matches
+  paper exactly, so the bar is invisible until there is something behind it.
+*/}
+<header
+  class="chrome-translucent sticky top-0 z-30 bg-paper/70 backdrop-blur-xl backdrop-saturate-150"
+>
+  <nav
+    aria-label="Main"
+    class="mx-auto flex w-full max-w-(--spacing-content) items-center justify-between px-6 py-6"
+  >
+    <a
+      href="/"
+      class="pressable inline-block font-display text-lg font-black tracking-tight text-ink no-underline hover:text-accent-deep"
+    >
+      {profile.shortName.toLowerCase()}
+    </a>
+
+    <ul class="flex list-none items-center gap-6 p-0 text-sm">
+      {links.map(({ href, label }) => {
+        const current = pathname === href;
+        return (
+          <li>
+            <a
+              href={href}
+              aria-current={current ? 'page' : undefined}
+              class:list={[
+                'pressable group relative inline-block no-underline',
+                current ? 'font-bold text-ink' : 'font-medium text-ink-muted hover:text-ink',
+              ]}
+            >
+              {label}
+              {/*
+                The marker is anchored under the label it belongs to and grows
+                from the left edge, so it reads as belonging to that word rather
+                than arriving from somewhere else.
+              */}
+              <span
+                aria-hidden="true"
+                class:list={[
+                  'absolute -bottom-1.5 left-0 h-[2px] w-full origin-left rounded-full bg-accent',
+                  'transition-transform duration-(--duration-settle) ease-settle',
+                  current ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
+                ]}
+              ></span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+
+  {/*
+    A soft edge where content meets floating chrome, instead of a 1px rule that
+    is drawn whether or not anything is actually underneath it.
+  */}
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-x-0 top-full h-6 bg-linear-to-b from-paper/70 to-transparent"
+  ></div>
+</header>

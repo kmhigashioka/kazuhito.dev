@@ -1,0 +1,25 @@
+---
+import { profile } from '../content/profile';
+---
+
+<footer class="mt-20 border-t border-border-warm py-8 text-sm text-ink-muted">
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <p class="m-0">&copy; {new Date().getFullYear()} {profile.name}</p>
+    <ul class="flex list-none gap-4 p-0">
+      {profile.links.map(({ label, href }) => (
+        <li>
+          <a
+            href={href}
+            class="pressable group relative inline-block font-semibold text-accent-deep no-underline"
+          >
+            {label}
+            <span
+              aria-hidden="true"
+              class="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 rounded-full bg-accent-deep transition-transform duration-(--duration-settle) ease-settle group-hover:scale-x-100"
+            ></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</footer>
