@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1746009,
+    "title": "Streamlining development with mock API in React",
+    "description": "Background   As a Frontend developer, before working on a new feature, it is important to...",
+    "url": "https://dev.to/kmhigashioka/streamlining-development-with-mock-api-in-react-27m7",
+    "publishedAt": "2024-01-30T13:51:20Z",
+    "readingTimeMinutes": 7,
+    "tags": ["react", "testing", "unittest", "vitest"],
+    "coverImage": "https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fkj6e9etc7ys39nbqylsk.png"
+  },
+  {
+    "id": 1731483,
+    "title": "Unlocking Test Data Efficiency in React",
+    "description": "When I was writing tests in previous React projects, I often faced this problem where \"test data\" was...",
+    "url": "https://dev.to/kmhigashioka/unlocking-test-data-efficiency-in-react-422f",
+    "publishedAt": "2024-01-16T16:49:43Z",
+    "readingTimeMinutes": 4,
+    "tags": ["react", "javascript", "jest", "unittest"],
+    "coverImage": "https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F1274ouf2r48x7d8rux6f.png"
+  }
+]

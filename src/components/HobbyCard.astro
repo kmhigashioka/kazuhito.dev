@@ -1,0 +1,16 @@
+---
+import type { Hobby } from '../content/types';
+
+interface Props {
+  hobby: Hobby;
+  accent: string;
+}
+
+const { hobby, accent } = Astro.props;
+---
+
+<article class="rounded-(--radius-card) border border-border-warm bg-surface p-5">
+  <div class={`mb-3 h-8 w-8 rounded-lg ${accent}`} aria-hidden="true"></div>
+  <h3 class="text-base">{hobby.name}</h3>
+  <p class="mt-1 text-sm leading-relaxed text-ink-muted">{hobby.blurb}</p>
+</article>
