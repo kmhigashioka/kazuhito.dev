@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Mark from '../components/Mark.astro';
 
 const routes = [
   { href: '/', label: 'Home', blurb: 'The front door.' },
@@ -53,16 +54,7 @@ const routes = [
     </div>
 
     <div class="flex flex-1 justify-center">
-      {/*
-        The homepage mark, broken apart — the same shapes, no longer lining up.
-      */}
-      <div class="relative h-[150px] w-[150px]" aria-hidden="true">
-        <div class="absolute inset-0 rounded-full bg-sun shadow-mark"></div>
-        <div
-          class="absolute inset-0 translate-x-4 -translate-y-2 rounded-full bg-accent [clip-path:inset(0_0_0_50%)]"
-        ></div>
-        <div class="absolute -bottom-5 -left-8 h-[60px] w-[60px] rounded-full bg-counter"></div>
-      </div>
+      <Mark />
     </div>
   </div>
 </Base>
