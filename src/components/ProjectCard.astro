@@ -21,7 +21,7 @@ const { project } = Astro.props;
 >
   {project.image ? (
     <img
-      src={project.image}
+      src={project.image.src}
       alt=""
       loading="lazy"
       width="400"

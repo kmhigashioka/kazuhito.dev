@@ -33,6 +33,26 @@ describe('projects', () => {
       }
     }
   });
+
+  // A floor, not an exact count. Asserting "images, when present, are valid"
+  // would pass vacuously against zero images — which is precisely the defect
+  // this replaces. Asserting exactly which projects lack one goes stale the
+  // moment a screenshot is added; a floor does not.
+  it('gives at least eight projects a screenshot', () => {
+    const withImage = employers.flatMap((e) => e.projects).filter((p) => p.image);
+    expect(withImage.length).toBeGreaterThanOrEqual(8);
+  });
+
+  it('resolves every screenshot to a real image', () => {
+    for (const employer of employers) {
+      for (const project of employer.projects) {
+        if (!project.image) continue;
+        expect(project.image.src.length).toBeGreaterThan(0);
+        expect(project.image.width).toBeGreaterThan(0);
+        expect(project.image.height).toBeGreaterThan(0);
+      }
+    }
+  });
 });
 
 describe('profile', () => {
