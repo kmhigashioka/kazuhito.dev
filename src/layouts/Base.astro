@@ -23,7 +23,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Kazuhito Higashioka — I build software for humans."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
     <!-- Matches the page background so mobile browser chrome joins the page
          rather than framing it in default white. -->
     <meta name="theme-color" content="#FFFBF2" />

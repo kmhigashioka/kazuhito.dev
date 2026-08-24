@@ -94,6 +94,26 @@ test('external links point where they claim', async ({ page }) => {
   await expect(page.locator('a[href="mailto:kmhigashioka@gmail.com"]').first()).toBeVisible();
 });
 
+test('every page unfurls with a share card', async ({ page }) => {
+  for (const { path } of PAGES) {
+    await page.goto(path);
+
+    // Must be absolute: relative og:image URLs are ignored by most unfurlers,
+    // which is indistinguishable from having no tag at all.
+    const image = page.locator('meta[property="og:image"]');
+    await expect(image).toHaveAttribute('content', /^https:\/\/kazuhito\.dev\/og\.png$/);
+
+    await expect(page.locator('meta[property="og:image:width"]'))
+      .toHaveAttribute('content', '1200');
+    await expect(page.locator('meta[property="og:image:height"]'))
+      .toHaveAttribute('content', '630');
+    await expect(page.locator('meta[property="og:image:alt"]'))
+      .toHaveAttribute('content', /I build software for humans/);
+    await expect(page.locator('meta[name="twitter:card"]'))
+      .toHaveAttribute('content', 'summary_large_image');
+  }
+});
+
 test('no console errors on any page', async ({ page }) => {
   const errors: string[] = [];
   page.on('console', (msg) => {

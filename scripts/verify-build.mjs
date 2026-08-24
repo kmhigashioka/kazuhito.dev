@@ -50,9 +50,12 @@ for (const { path, marker } of EXPECTED) {
   }
 }
 
-for (const icon of ['dist/favicon.ico', 'dist/favicon.svg']) {
-  if (!existsSync(icon)) {
-    failures.push(`${icon} is missing`);
+// public/ is copied AFTER page generation, so a build that dies during that
+// phase still leaves complete, correct HTML behind. These files are how that
+// gap gets caught.
+for (const asset of ['dist/favicon.ico', 'dist/favicon.svg', 'dist/og.png']) {
+  if (!existsSync(asset)) {
+    failures.push(`${asset} is missing`);
   }
 }
 
