@@ -35,6 +35,34 @@ test('work page lists all ten projects', async ({ page }) => {
   await expect(page.locator('article')).toHaveCount(10);
 });
 
+test('work page shows a screenshot for every project that has one', async ({ page }) => {
+  await page.goto('/work');
+  await expect(page.locator('article img')).toHaveCount(8);
+});
+
+test('work page has no placeholder gradients', async ({ page }) => {
+  await page.goto('/work');
+  // The old fallback drew `bg-linear-to-br from-sun/40 to-accent/25` for every
+  // project, because nothing ever set an image. Cards without a screenshot now
+  // render no image area at all.
+  await expect(page.locator('article [class*="bg-linear-to-br"]')).toHaveCount(0);
+});
+
+test('screenshots are decorative and sit in a well', async ({ page }) => {
+  await page.goto('/work');
+  const images = page.locator('article img');
+
+  for (let i = 0; i < (await images.count()); i++) {
+    const img = images.nth(i);
+    // A UI screenshot cannot be usefully described in an alt string, and the
+    // card's title and blurb follow immediately. Decorative is the honest
+    // declaration — but it must be explicit, not missing.
+    await expect(img).toHaveAttribute('alt', '');
+    await expect(img).toHaveAttribute('loading', 'lazy');
+    await expect(img.locator('xpath=..')).toHaveClass(/inset-well/);
+  }
+});
+
 test('the mark is decorative and appears once per page that uses it', async ({ page }) => {
   for (const path of ['/', '/404']) {
     await page.goto(path);

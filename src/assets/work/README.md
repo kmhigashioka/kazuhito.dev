@@ -58,7 +58,12 @@ contains any. What each one actually shows:
 
 ## Format note
 
-`charts.png` is the one asset with meaningful transparency (~8% of pixels,
-fully transparent at the corners) — it is a composite of floating cards rather
-than a flat app view. It is left unflattened so the page's cream shows through
-instead of a hard white rectangle.
+`charts.png` arrived as the one asset with meaningful transparency (~8% of
+pixels, fully transparent at the corners) — a composite of floating cards
+rather than a flat app view. Rendered as-is it ghosted badly against the card,
+reading as a broken or disabled image beside seven opaque neighbours, so it is
+flattened onto `paper` (`#FFFBF2`) rather than white: its cards then sit on the
+page's own ground instead of on a rectangle that not quite matches it.
+
+Its left-hand panel still reads soft. That is the composite's own depth effect
+— the designer faded the backdrop layer — not a transparency artifact.
