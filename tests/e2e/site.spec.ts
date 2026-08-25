@@ -56,7 +56,7 @@ test('screenshots are decorative and lazy', async ({ page }) => {
     const img = images.nth(i);
     // A UI screenshot cannot be usefully described in an alt string, and the
     // card's title and blurb follow immediately. Decorative is the honest
-    // declaration — but it must be explicit, not missing.
+    // declaration, but it must be explicit, not missing.
     await expect(img).toHaveAttribute('alt', '');
     await expect(img).toHaveAttribute('loading', 'lazy');
   }

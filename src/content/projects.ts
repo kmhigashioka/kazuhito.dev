@@ -12,11 +12,11 @@ export const employers: Employer[] = [
   {
     name: 'EngageRocket',
     role: 'Senior Software Developer',
-    period: '2021 — now',
+    period: '2021 to now',
     projects: [
       {
         title: 'PerformAI',
-        blurb: 'AI-assisted performance management — turning review cycles into something managers actually finish.',
+        blurb: 'AI-assisted performance management that turns review cycles into something managers actually finish.',
         tech: ['React', 'TypeScript'],
         link: 'https://www.engagerocket.co/performai-performance-management',
         image: performai,
@@ -35,7 +35,7 @@ export const employers: Employer[] = [
       },
       {
         title: 'Rocket Surgeon',
-        blurb: 'Resolving customer issues in production — the rotation where you find out what your abstractions really cost.',
+        blurb: 'Resolving customer issues in production. The rotation where you find out what your abstractions really cost.',
         tech: ['React', 'Jira'],
         image: cs,
       },
@@ -44,11 +44,11 @@ export const employers: Employer[] = [
   {
     name: 'Infor PSSC',
     role: 'Software Engineer, Senior',
-    period: '2020 — 2021',
+    period: '2020 to 2021',
     projects: [
       {
         title: 'FPLM',
-        blurb: 'Fashion product lifecycle management — frontend and backend work on tooling for the fashion supply chain.',
+        blurb: 'Fashion product lifecycle management. Frontend and backend work on tooling for the fashion supply chain.',
         tech: ['React', 'C#', '.NET Core', 'SQL Server'],
         image: fplm,
       },
@@ -57,7 +57,7 @@ export const employers: Employer[] = [
   {
     name: 'Samsung R&D Institute Philippines',
     role: 'Engineer',
-    period: '2019 — 2020',
+    period: '2019 to 2020',
     projects: [
       {
         title: 'Cognitiv Analytics UI Components',
@@ -74,11 +74,11 @@ export const employers: Employer[] = [
   {
     name: 'BizBox',
     role: 'Full Stack Developer / Team Lead',
-    period: '2015 — 2019',
+    period: '2015 to 2019',
     projects: [
       {
         title: 'Beacon / PhilHealth E-Claims',
-        blurb: 'A claims portal used by Philippine hospitals to file with PhilHealth — the kind of software where a bug is somebody’s hospital bill.',
+        blurb: 'A claims portal used by Philippine hospitals to file with PhilHealth. The kind of software where a bug is somebody’s hospital bill.',
         tech: ['AngularJS', 'C#', '.NET', 'SQL Server'],
         image: beacon,
       },
@@ -90,7 +90,7 @@ export const employers: Employer[] = [
       },
       {
         title: 'EHR',
-        blurb: 'Electronic health records — patient data, built to be read quickly by people who are in a hurry.',
+        blurb: 'Electronic health records: patient data, built to be read quickly by people who are in a hurry.',
         tech: ['AngularJS', 'C#', '.NET', 'SQL Server'],
         image: ehr,
       },

@@ -2,13 +2,13 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 
 /**
  * Astro's CLI calls process.exit(), which on Windows races an open socket
- * handle left by a successful build-time fetch and trips a libuv assertion —
+ * handle left by a successful build-time fetch and trips a libuv assertion,
  * after the build has already written correct output. The exit code is
  * therefore unreliable on that platform, so we verify the artifacts instead.
  *
  * This runs ONLY when `astro build` exited non-zero (invoked by
  * scripts/build.mjs, Windows path only). It relies on scripts/build.mjs
- * having removed dist/ immediately before running `astro build` — NOT on
+ * having removed dist/ immediately before running `astro build`, NOT on
  * any guarantee from Astro itself. Astro only empties dist/ inside its
  * static-build phase, which runs after config validation and content-
  * collection loading, so a failure earlier than that would otherwise leave
@@ -66,7 +66,7 @@ if (!existsSync('dist/_astro')) {
 }
 
 if (failures.length > 0) {
-  console.error('Build verification FAILED — the build genuinely broke:');
+  console.error('Build verification FAILED. The build genuinely broke:');
   for (const failure of failures) console.error(`  - ${failure}`);
   process.exit(1);
 }

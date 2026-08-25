@@ -8,7 +8,7 @@ import { describe, expect, it } from 'vitest';
  * exercised by the e2e suite: Playwright runs against `astro preview`, which
  * does not apply Vercel's `redirects` config, so nothing in CI actually
  * proves these entries exist or are correct. This test can't prove Vercel
- * honours them (only a real preview deploy can — that's a manual checklist
+ * honours them (only a real preview deploy can; that's a manual checklist
  * item), but it stops a later edit from silently dropping or mistyping them.
  */
 interface VercelRedirect {

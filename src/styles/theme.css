@@ -9,7 +9,7 @@
   --color-ink: #191410;
   --color-ink-muted: #6B6058;
   --color-border-warm: #E5D9C7;
-  /* Fills and decorative shapes ONLY — never text. Measures 2.99:1 on the
+  /* Fills and decorative shapes ONLY, never text. Measures 2.99:1 on the
      page background, below WCAG's 3:1 floor even for large text. All accent
      text and links must use --color-accent-deep instead. */
   --color-accent: #EE6C1F;
@@ -28,13 +28,13 @@
   /* Springs, not beziers. A bezier is symmetric and prescribed; a spring
      decelerates the way a physical object does, which is what makes motion
      read as behaviour rather than as animation. `linear()` samples a real
-     spring solution, so these are the actual curves — no JS, no library.
+     spring solution, so these are the actual curves, with no JS and no library.
      Parameterised the way Apple parameterises them: damping ratio (overshoot)
      and response (how fast it reaches target), not mass/stiffness/damping.
 
      Damping 1.0, response 0.35s: critically damped, no overshoot. There is
      deliberately only one curve here. Overshoot belongs to motion the user
-     threw — a flick, a drag release — and this site has no gesture surface,
+     threw (a flick, a drag release), and this site has no gesture surface,
      so a bouncy variant would only ever be decoration pretending to be
      physics. Pair the curve with its settle time as the duration (below), or
      it is being replayed at the wrong speed. It looks "done" at roughly half
@@ -48,12 +48,12 @@
 }
 
 @layer base {
-  /* Settle time for the curve above — not a Tailwind theme namespace, so these
+  /* Settle time for the curve above. Not a Tailwind theme namespace, so these
      live here rather than in @theme. Using a shorter duration truncates the
      spring; using a longer one stretches it flat. */
   :root {
     --duration-settle: 500ms;
-    /* Press feedback is not a spring — it is a direct response, and it has to
+    /* Press feedback is not a spring. It is a direct response, and it has to
        land before the user perceives lag. */
     --duration-press: 90ms;
   }
@@ -76,7 +76,7 @@
 
   /* Tracking is size-specific. Letterforms read progressively further apart
      as they grow, so display type needs negative tracking and small type
-     needs roughly none — a single blanket value is necessarily wrong at one
+     needs roughly none, so a single blanket value is necessarily wrong at one
      end of the scale. Weight carries hierarchy alongside size, which buys
      presence without buying width. */
   h1 { font-weight: 800; letter-spacing: -0.035em; }
@@ -157,7 +157,7 @@
 }
 
 /* Reduced motion means a gentler equivalent, not the absence of feedback.
-   Colour, opacity and shadow still transition — they aid comprehension and
+   Colour, opacity and shadow still transition; they aid comprehension and
    provoke no vestibular response. Movement is what goes. */
 @media (prefers-reduced-motion: reduce) {
   html {
