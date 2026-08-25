@@ -35,6 +35,33 @@ test('work page lists all ten projects', async ({ page }) => {
   await expect(page.locator('article')).toHaveCount(10);
 });
 
+test('work page shows a screenshot for every project that has one', async ({ page }) => {
+  await page.goto('/work');
+  await expect(page.locator('article img')).toHaveCount(8);
+});
+
+test('work page has no placeholder gradients', async ({ page }) => {
+  await page.goto('/work');
+  // The old fallback drew `bg-linear-to-br from-sun/40 to-accent/25` for every
+  // project, because nothing ever set an image. Cards without a screenshot now
+  // render no image area at all.
+  await expect(page.locator('article [class*="bg-linear-to-br"]')).toHaveCount(0);
+});
+
+test('screenshots are decorative and lazy', async ({ page }) => {
+  await page.goto('/work');
+  const images = page.locator('article img');
+
+  for (let i = 0; i < (await images.count()); i++) {
+    const img = images.nth(i);
+    // A UI screenshot cannot be usefully described in an alt string, and the
+    // card's title and blurb follow immediately. Decorative is the honest
+    // declaration — but it must be explicit, not missing.
+    await expect(img).toHaveAttribute('alt', '');
+    await expect(img).toHaveAttribute('loading', 'lazy');
+  }
+});
+
 test('the mark is decorative and appears once per page that uses it', async ({ page }) => {
   for (const path of ['/', '/404']) {
     await page.goto(path);
@@ -64,6 +91,26 @@ test('external links point where they claim', async ({ page }) => {
   await page.goto('/about');
   await expect(page.locator('a[href="https://github.com/kmhigashioka"]').first()).toBeVisible();
   await expect(page.locator('a[href="mailto:kmhigashioka@gmail.com"]').first()).toBeVisible();
+});
+
+test('every page unfurls with a share card', async ({ page }) => {
+  for (const { path } of PAGES) {
+    await page.goto(path);
+
+    // Must be absolute: relative og:image URLs are ignored by most unfurlers,
+    // which is indistinguishable from having no tag at all.
+    const image = page.locator('meta[property="og:image"]');
+    await expect(image).toHaveAttribute('content', /^https:\/\/kazuhito\.dev\/og\.png$/);
+
+    await expect(page.locator('meta[property="og:image:width"]'))
+      .toHaveAttribute('content', '1200');
+    await expect(page.locator('meta[property="og:image:height"]'))
+      .toHaveAttribute('content', '630');
+    await expect(page.locator('meta[property="og:image:alt"]'))
+      .toHaveAttribute('content', /I build software for humans/);
+    await expect(page.locator('meta[name="twitter:card"]'))
+      .toHaveAttribute('content', 'summary_large_image');
+  }
 });
 
 test('no console errors on any page', async ({ page }) => {

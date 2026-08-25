@@ -1,0 +1,92 @@
+<!doctype html>
+<meta charset="utf-8" />
+<style>
+  @font-face {
+    font-family: 'Gabarito';
+    src: url('../node_modules/@fontsource-variable/gabarito/files/gabarito-latin-wght-normal.woff2') format('woff2');
+    font-weight: 400 900;
+  }
+  @font-face {
+    font-family: 'Schibsted';
+    src: url('../node_modules/@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2') format('woff2');
+    font-weight: 400 900;
+  }
+
+  :root {
+    --paper: #FFFBF2;
+    --ink: #191410;
+    --ink-muted: #6B6058;
+    --accent: #EE6C1F;
+    --counter: #2E7D6E;
+    --sun: #F7C948;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px;
+    height: 630px;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 90px;
+    gap: 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .name {
+    font-family: 'Gabarito', sans-serif;
+    font-weight: 800;
+    font-size: 38px;
+    letter-spacing: -0.015em;
+    color: var(--ink-muted);
+  }
+
+  h1 {
+    font-family: 'Gabarito', sans-serif;
+    font-weight: 800;
+    font-size: 82px;
+    line-height: 1.03;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    margin-top: 22px;
+  }
+
+  .domain {
+    font-family: 'Schibsted', sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--ink-muted);
+    margin-top: 44px;
+  }
+
+  /* Paper tooth, as on the site — near the threshold of perception. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+</style>
+
+<div>
+  <p class="name">Kazuhito Higashioka</p>
+  <h1>I build software<br />for humans.</h1>
+  <p class="domain">kazuhito.dev</p>
+</div>
+
+<!-- The bouldering mark, geometry copied verbatim from src/components/Mark.astro.
+     Its viewBox is 102x96, not square; forcing it to 0 0 100 100 clips the right facet. -->
+<svg width="330" height="330" viewBox="0 0 102 96" style="flex-shrink:0">
+  <path d="M12 86L50 10L90 60Z" fill="var(--sun)" transform="translate(-6 3)" />
+  <path d="M50 10L90 60L62 86Z" fill="var(--accent)" transform="translate(5 -2)" />
+  <path
+    d="M18 78c0-16 12-24 32-24s32 8 32 24c0 6-4 8-10 8H28c-6 0-10-2-10-8Z"
+    fill="var(--counter)"
+    transform="translate(30 53) scale(.34)"
+  />
+</svg>

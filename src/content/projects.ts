@@ -1,4 +1,12 @@
 import type { Employer } from './types';
+import beacon from '../assets/work/beacon.png';
+import charts from '../assets/work/charts.png';
+import cs from '../assets/work/cs.png';
+import ehr from '../assets/work/ehr.png';
+import fplm from '../assets/work/fplm.png';
+import nebula from '../assets/work/nebula.png';
+import performai from '../assets/work/performai.png';
+import qmu from '../assets/work/qmu.png';
 
 export const employers: Employer[] = [
   {
@@ -11,21 +19,25 @@ export const employers: Employer[] = [
         blurb: 'AI-assisted performance management — turning review cycles into something managers actually finish.',
         tech: ['React', 'TypeScript'],
         link: 'https://www.engagerocket.co/performai-performance-management',
+        image: performai,
       },
       {
         title: 'Nebula',
         blurb: "The design language system every EngageRocket app is built from. Components, documentation, Storybook.",
         tech: ['React', 'TypeScript', 'Storybook'],
+        image: nebula,
       },
       {
         title: 'Frontend Development',
         blurb: 'Application and feature work across the analytics platform that helps leaders make people decisions from real-time data.',
         tech: ['React', 'TypeScript'],
+        image: charts,
       },
       {
         title: 'Rocket Surgeon',
         blurb: 'Resolving customer issues in production — the rotation where you find out what your abstractions really cost.',
         tech: ['React', 'Jira'],
+        image: cs,
       },
     ],
   },
@@ -38,6 +50,7 @@ export const employers: Employer[] = [
         title: 'FPLM',
         blurb: 'Fashion product lifecycle management — frontend and backend work on tooling for the fashion supply chain.',
         tech: ['React', 'C#', '.NET Core', 'SQL Server'],
+        image: fplm,
       },
     ],
   },
@@ -67,16 +80,19 @@ export const employers: Employer[] = [
         title: 'Beacon / PhilHealth E-Claims',
         blurb: 'A claims portal used by Philippine hospitals to file with PhilHealth — the kind of software where a bug is somebody’s hospital bill.',
         tech: ['AngularJS', 'C#', '.NET', 'SQL Server'],
+        image: beacon,
       },
       {
         title: 'QMeUp',
         blurb: 'Queue management for clinics and hospitals.',
         tech: ['React', 'Meteor', 'Node', 'MongoDB'],
+        image: qmu,
       },
       {
         title: 'EHR',
         blurb: 'Electronic health records — patient data, built to be read quickly by people who are in a hurry.',
         tech: ['AngularJS', 'C#', '.NET', 'SQL Server'],
+        image: ehr,
       },
     ],
   },

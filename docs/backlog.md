@@ -83,7 +83,7 @@ Recorded in the specs as considered and deliberately excluded:
 - **Per-project detail pages.** Ten projects as cards, no deeper level.
 - **Contact form.** Removed rather than modernised — email and social links instead.
 - **Analytics, a "now" page, a uses page.**
-- **Bolt holes and multi-hold arrangements on the mark.** Built, evaluated, cut. See
-  `docs/superpowers/specs/2026-08-16-bouldering-mark-design.md`.
+- **Bolt holes and multi-hold arrangements on the mark.** Built, evaluated, cut. Both
+  read as noise at the sizes the mark actually renders at.
 - **Scattered-holds mark direction.** Comped, then cut for being too close to its
   reference. The volume mark is what ships.

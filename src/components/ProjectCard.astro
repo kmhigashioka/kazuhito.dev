@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import type { Project } from '../content/types';
 
 interface Props {
@@ -19,20 +20,24 @@ const { project } = Astro.props;
     project.link && 'liftable group',
   ]}
 >
-  {project.image ? (
-    <img
+  {/*
+    2:1 with the crop anchored to the top. Native ratios run 1.34–2.03, so
+    this trims from the bottom of each and keeps every app's header and nav —
+    the part that makes a product recognisable. The previous slot was 56px
+    tall, at which a Storybook screenshot is an illegible smear.
+
+    alt="" is deliberate: a UI screenshot cannot be conveyed in an alt string,
+    and the title and blurb below say what the project is.
+  */}
+  {project.image && (
+    <Image
       src={project.image}
       alt=""
       loading="lazy"
-      width="400"
-      height="112"
-      class="mb-3 h-14 w-full rounded-lg object-cover"
+      widths={[470, 940]}
+      sizes="(min-width: 640px) 470px, 100vw"
+      class="mb-4 aspect-[2/1] w-full rounded-lg object-cover object-top"
     />
-  ) : (
-    <div
-      class="mb-3 h-14 w-full rounded-lg bg-linear-to-br from-sun/40 to-accent/25"
-      aria-hidden="true"
-    ></div>
   )}
 
   <h3 class="text-lg">

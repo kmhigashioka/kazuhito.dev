@@ -1,10 +1,13 @@
+import type { ImageMetadata } from 'astro';
+
 export interface Project {
   title: string;
   blurb: string;
   tech: string[];
   link?: string;
-  /** Optional screenshot. Cards fall back to a decorative gradient when absent. */
-  image?: string;
+  /** Product screenshot. Absent renders no image area at all — deliberately
+   *  not a placeholder, which is what this replaced. */
+  image?: ImageMetadata;
 }
 
 export interface Employer {
