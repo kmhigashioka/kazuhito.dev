@@ -5,7 +5,7 @@ export interface Project {
   blurb: string;
   tech: string[];
   link?: string;
-  /** Product screenshot. Absent renders no image area at all — deliberately
+  /** Product screenshot. Absent renders no image area at all. Deliberately
    *  not a placeholder, which is what this replaced. */
   image?: ImageMetadata;
 }

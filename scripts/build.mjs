@@ -15,10 +15,10 @@ import { rmSync } from 'node:fs';
  *    stale dist/ from a previous successful build completely untouched.
  *    Removing dist/ ourselves, first, closes that gap: after this script
  *    runs, dist/ is either the fresh output of THIS build or genuinely
- *    absent/incomplete — never a leftover from an earlier run.
+ *    absent/incomplete, never a leftover from an earlier run.
  *
  * 2. On Windows, `astro build` can crash on process exit due to a libuv
- *    teardown assertion after writing complete, correct output — see
+ *    teardown assertion after writing complete, correct output. See
  *    scripts/verify-build.mjs for the full explanation. That makes the
  *    exit code unreliable ONLY on Windows. Every other platform cannot
  *    hit that assertion, so there the exit code is trusted unconditionally
@@ -42,7 +42,7 @@ if (process.platform !== 'win32') {
 
 // Windows, non-zero exit: could be a genuine failure or the known libuv
 // crash after a successful build. dist/ was removed before this run, so
-// its current state tells the truth either way — verify by artifacts.
+// its current state tells the truth either way, so verify by artifacts.
 const verify = spawnSync(process.execPath, ['scripts/verify-build.mjs'], {
   stdio: 'inherit',
 });

@@ -63,8 +63,8 @@ function normalise(raw: unknown): Post[] | null {
 /**
  * Fetches published dev.to posts at build time.
  *
- * Never throws and never returns an empty array. Any failure — non-OK status,
- * network error, timeout, malformed body, empty list — falls back to the
+ * Never throws and never returns an empty array. Any failure (non-OK status,
+ * network error, timeout, malformed body, empty list) falls back to the
  * committed snapshot so the build cannot be broken by a third-party outage.
  */
 export async function fetchPosts(fetchImpl: typeof fetch = fetch): Promise<Post[]> {

@@ -5,7 +5,7 @@ import { resolve } from 'node:path';
 /**
  * Renders the 1200x630 share card to public/og.png.
  *
- * Run on demand — `node scripts/make-og.mjs` — when the card's content
+ * Run on demand (`node scripts/make-og.mjs`) when the card's content
  * changes, NOT as part of the build. A four-page static site does not need
  * image generation in its build path, and the card changes about once a year.
  *
@@ -24,7 +24,7 @@ const page = await browser.newPage({
 await page.goto(card);
 // Webfonts load over file:// asynchronously; screenshotting before they land
 // silently produces a card set in the fallback sans. Resolve to a boolean,
-// not to document.fonts.ready itself — Playwright serialises the return
+// not to document.fonts.ready itself, because Playwright serialises the return
 // value, and a FontFaceSet does not survive that.
 await page.evaluate(() => document.fonts.ready.then(() => true));
 

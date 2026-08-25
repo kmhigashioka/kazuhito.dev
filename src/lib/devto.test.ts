@@ -6,7 +6,7 @@ import snapshot from '../content/devto-snapshot.json';
  * `devto.ts` imports the same JSON module, so `snapshot` here and the
  * module's internal `FALLBACK` are the SAME object under ESM module
  * caching. Asserting `toEqual(snapshot)` therefore does not prove anything
- * was cloned — if `cloneFallback()` were removed and `fetchPosts` returned
+ * was cloned. If `cloneFallback()` were removed and `fetchPosts` returned
  * `FALLBACK` directly, mutating the returned array would mutate `snapshot`
  * itself, and every `toEqual(snapshot)` assertion below would degrade into
  * comparing the object against itself and pass vacuously.
@@ -121,7 +121,7 @@ describe('fetchPosts', () => {
     const second = await fetchPosts(failing as unknown as typeof fetch);
 
     // Structural check against the pristine BASELINE, not the live
-    // `snapshot` import — see the comment above BASELINE for why comparing
+    // `snapshot` import. See the comment above BASELINE for why comparing
     // against `snapshot` itself cannot catch a missing clone.
     expect(second).toEqual(BASELINE);
 
@@ -211,7 +211,7 @@ describe('devto-snapshot.json', () => {
       // reading_time_minutes, tag_list, social_image). If any of these
       // fail, the snapshot was refreshed incorrectly and PostCard.astro
       // will throw on post.tags.length the next time the fallback path is
-      // actually exercised — i.e. during a real dev.to outage.
+      // actually exercised, i.e. during a real dev.to outage.
       expect(post.title.length).toBeGreaterThan(0);
       expect(post.url.length).toBeGreaterThan(0);
     }

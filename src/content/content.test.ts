@@ -35,7 +35,7 @@ describe('projects', () => {
   });
 
   // A floor, not an exact count. Asserting "images, when present, are valid"
-  // would pass vacuously against zero images — which is precisely the defect
+  // would pass vacuously against zero images, which is precisely the defect
   // this replaces. Asserting exactly which projects lack one goes stale the
   // moment a screenshot is added; a floor does not.
   it('gives at least eight projects a screenshot', () => {

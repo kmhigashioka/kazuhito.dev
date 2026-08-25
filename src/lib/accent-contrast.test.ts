@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 /**
- * `#EE6C1F` (--color-accent) measures 2.99:1 on the page background — below
- * WCAG's 3:1 floor even for large text — so it must never be used for text.
+ * `#EE6C1F` (--color-accent) measures 2.99:1 on the page background, below
+ * WCAG's 3:1 floor even for large text, so it must never be used for text.
  * All accent text uses `#B4470A` (--color-accent-deep) instead. The only
  * automated enforcement of this used to be an e2e axe run, which needs a
  * network and a browser. This is a cheap, offline guard against the same
@@ -13,7 +13,7 @@ import { describe, expect, it } from 'vitest';
  * .astro file is exactly the mistake axe caught once already.
  *
  * Deliberately NOT flagged: `hover:text-accent-deep`, `bg-accent`,
- * `to-accent`, `from-accent` — those are legitimate fills/decorative uses.
+ * `to-accent`, `from-accent`. Those are legitimate fills/decorative uses.
  */
 const srcDir = fileURLToPath(new URL('..', import.meta.url));
 
