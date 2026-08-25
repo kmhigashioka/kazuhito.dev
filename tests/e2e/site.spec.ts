@@ -48,7 +48,7 @@ test('work page has no placeholder gradients', async ({ page }) => {
   await expect(page.locator('article [class*="bg-linear-to-br"]')).toHaveCount(0);
 });
 
-test('screenshots are decorative and sit in a well', async ({ page }) => {
+test('screenshots are decorative and lazy', async ({ page }) => {
   await page.goto('/work');
   const images = page.locator('article img');
 
@@ -59,7 +59,6 @@ test('screenshots are decorative and sit in a well', async ({ page }) => {
     // declaration — but it must be explicit, not missing.
     await expect(img).toHaveAttribute('alt', '');
     await expect(img).toHaveAttribute('loading', 'lazy');
-    await expect(img.locator('xpath=..')).toHaveClass(/inset-well/);
   }
 });
 

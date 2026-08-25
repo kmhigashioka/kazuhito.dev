@@ -156,16 +156,6 @@
   }
 }
 
-/* Recesses a screenshot into the card. Every product shot on /work is cool
-   blue-grey UI on a warm cream page; framing each one as a window into
-   another application is what keeps that colour from competing with the
-   page, rather than tinting the images and misrepresenting the products.
-   Warm shadow, like every other shadow here — black at low opacity on cream
-   reads as grey dirt. */
-@utility inset-well {
-  box-shadow: inset 0 1px 3px rgb(74 52 28 / 0.09);
-}
-
 /* Reduced motion means a gentler equivalent, not the absence of feedback.
    Colour, opacity and shadow still transition — they aid comprehension and
    provoke no vestibular response. Movement is what goes. */
